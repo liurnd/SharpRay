@@ -14,13 +14,11 @@ void Shader::shade(const Ray* r, const World* world)
 	si->hitNormal = si->firstHitEntity->normalAt(si->firstHitPoint);
 	for (auto i = world->lightList.begin(); i != world->lightList.end(); i++)
 	{
-		if ((*i)->isInShadow(si))
-			continue;
-		vector3D lightDirection = (*i)->getDirection(si);
-		float cosLN = dot(lightDirection, si->hitNormal);
-		if (cosLN< 0)
-			continue;
-		si->Lo += si->firstHitEntity->material->Lo(si, lightDirection, (*i)->Li(si, lightDirection)*cosLN);
+		RColor Li; float cosLn;
+		if ((*i)->Li(this, si, Li, cosLn))
+		{
+			si->Lo += si->firstHitEntity->material->Lo(si, cosLn, Li*cosLn);
+		}
 	}
 
 	si->Lo += RColor(0.5);
@@ -42,7 +40,7 @@ void Shader::exposure(const World* world)
 	}
 }
 
-bool Shader::castShadowRay(Ray* r, const World* w)
+bool Shader::castShadowRay(Ray* r, const World* w) const
 {
 	ShadeInfo *si = r->shadeInfo;
 	for (auto i = w->entityList.begin(); i != w->entityList.end(); i++)
@@ -50,11 +48,11 @@ bool Shader::castShadowRay(Ray* r, const World* w)
 		float t = (*i)->firstHit(r);
 		if (!isfinite(t))
 			continue;
-		if (t < si->firstHitT)
+		if (t < si->firstHitT - (*i)->kEpsilon)
 		{
-			if (t < (*i)->kEpsilon)
-				continue;
-			r->shadeInfo->firstHitT = t;
+			si->firstHitT = t;
+			si->firstHitEntity = *i;
+			si->firstHitPoint = r->origin + r->direction*si->firstHitT;
 			return true;
 		}
 	}

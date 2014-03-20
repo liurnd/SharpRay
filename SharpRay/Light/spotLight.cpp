@@ -1,13 +1,22 @@
 #include "spotLight.h"
 #include <Core/shader.h>
-vector3D spotLight::getDirection(ShadeInfo* si){
-	return normalize(position - si->firstHitPoint);
-}
-bool spotLight::isInShadow(ShadeInfo*) const{
-	return false;
-}
-RColor spotLight::Li(ShadeInfo*, const vector3D& lightDirection) const {
-	return (ls*color);
+#include <Core/ray.h>
+
+bool spotLight::Li(Shader* shader, ShadeInfo* si, RColor& colorOut, float& cosin) const {
+	vector3D lightDirection = si->firstHitPoint - position;
+	cosin = dot(lightDirection, -si->hitNormal);
+	if (cosin < 0)
+		return false;
+	ShadeInfo ssi;
+	ssi.firstHitT = glm::length(lightDirection);
+	Ray r(position, lightDirection);
+	r.shadeInfo = &ssi;
+	
+	if (shader->castShadowRay(&r, si->world))
+		return false;
+	colorOut = ls*color;
+	cosin /= ssi.firstHitT;
+	return true;
 }
 
 spotLight::spotLight()

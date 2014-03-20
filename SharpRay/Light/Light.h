@@ -3,14 +3,13 @@
 #include <Core/fmath.h>
 #include <Core/Color.h>
 class ShadeInfo;
+class Shader;
 class Entity;
 class Ray;
 class Light
 {
 public:
-	virtual vector3D getDirection(ShadeInfo*)=0;
-	virtual bool isInShadow(ShadeInfo*) const=0;
-	virtual RColor Li(ShadeInfo*,const vector3D& lightDirection) const = 0;
+	virtual bool Li(Shader* shader, ShadeInfo* si, RColor& colorOut,float& cosin) const = 0;
 	Light();
 	~Light();
 };

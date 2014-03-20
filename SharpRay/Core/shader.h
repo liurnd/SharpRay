@@ -16,9 +16,9 @@ class Shader
 	};
 
 	void castRay(Ray*, const World*);
-	bool castShadowRay(Ray*, const World*);
 public:
 	RayQueue rayQueue;
+	bool castShadowRay(Ray*, const World*) const;
 	void exposure(const World* w);
 	void shade(const Ray*, const World* world);
 	Shader();

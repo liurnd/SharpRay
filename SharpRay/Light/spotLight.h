@@ -10,9 +10,7 @@ public:
 	RColor color;
 	vector3D position;
 	spotLight();
-	vector3D getDirection(ShadeInfo*) ;
-	bool isInShadow(ShadeInfo*) const ;
-	RColor Li(ShadeInfo*, const vector3D& lightDirection) const;
+	bool Li(Shader* shader, ShadeInfo* si, RColor& colorOut, float& cosin) const;
 	~spotLight();
 };
 #endif

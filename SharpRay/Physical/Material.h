@@ -8,7 +8,7 @@ class Material
 public:
 	float ka, kd;
 	RColor cd;
-	virtual RColor Lo(ShadeInfo* si, vector3D lightDirection, RColor Li)
+	virtual RColor Lo(ShadeInfo* si, float cosLn, RColor Li)
 	{
 		return kd*Li / (4.0f * 3.14f);
 	}
