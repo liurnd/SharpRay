@@ -17,4 +17,5 @@ public:
 };
 
 #include "sphere.h"
+#include "Plane.h"
 #endif

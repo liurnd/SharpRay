@@ -1,6 +1,7 @@
 #include "film.h"
 #include <png.hpp>
 typedef unsigned char byte;
+
 void Film::dumpToFile(const char* fName)
 {
 	png::image<png::rgb_pixel> fout(filmWidth,filmHeight);

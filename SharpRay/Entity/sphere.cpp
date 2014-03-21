@@ -13,6 +13,7 @@ vector3D Sphere::normalAt(const point3D& pos)
 
 float Sphere::firstHit(const Ray* r)
 {
+
 	point3D nPos = position - r->origin;
 	float b = -2*dot(r->direction, nPos);
 	float a = dot(r->direction, r->direction);

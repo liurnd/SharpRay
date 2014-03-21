@@ -22,7 +22,7 @@ struct Ray
 
 	Ray(const point3D& o,const vector3D& d, Film* cf, Pixel* p) :origin(o), direction(normalize(d)), currentFilm(cf){ parent.orgPixel = p; isMajor = true; }
 	Ray(const point3D& o,const vector3D& d, Film* cf, Ray* p) :origin(o), direction(normalize(d)), currentFilm(cf){ parent.orgRay = p; isMajor = false; }
-	Ray(const point3D& o, const vector3D& d) :origin(o), direction(normalize(d)){}
+	Ray(const point3D& o, const vector3D& d) :origin(o), direction(normalize(d)){ isMajor = false; }
 	~Ray();
 };
 #endif

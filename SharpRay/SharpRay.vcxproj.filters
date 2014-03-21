@@ -69,6 +69,9 @@
     <ClCompile Include="core\world.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Entity\Plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\camera.h">
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="Physical\Material.h">
       <Filter>Physical</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Plane.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
