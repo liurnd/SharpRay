@@ -22,7 +22,8 @@ public:
 	float pixelSize;
 	Pixel* pixelList;
 	inline Pixel* operator()(int i, int j){ return pixelList + i + filmHeight*j; }
-	void dumpToFile(const char*);
+	void dumpToPNGFile(const char*);
+	void dumpToHDRFile(const char*);
 	Film(int w, int h, float ps);
 	~Film();
 };

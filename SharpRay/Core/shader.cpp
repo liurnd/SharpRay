@@ -21,7 +21,7 @@ void Shader::shade(const Ray* r, const World* world)
 		}
 	}
 
-	si->Lo += RColor(0.5);
+	//si->Lo += RColor(0.5);
 }
 
 void Shader::exposure(const World* world)

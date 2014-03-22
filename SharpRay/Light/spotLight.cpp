@@ -14,7 +14,7 @@ bool spotLight::Li(Shader* shader, ShadeInfo* si, RColor& colorOut, float& cosin
 	
 	if (shader->castShadowRay(&r, si->world))
 		return false;
-	colorOut = ls*color / ssi.firstHitT/ssi.firstHitT;
+	colorOut = ls*color / ssi.firstHitT;
 	cosin /= ssi.firstHitT;
 	return true;
 }
