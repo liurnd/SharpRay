@@ -28,6 +28,9 @@
     <Filter Include="Core">
       <UniqueIdentifier>{db79d00b-39ed-48f7-b9b1-c4651acc6346}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sampler">
+      <UniqueIdentifier>{d7b49b3f-6d70-47f7-adfc-6380f7092fbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -72,6 +75,12 @@
     <ClCompile Include="Entity\Plane.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Sampler\Sampler.cpp">
+      <Filter>Sampler</Filter>
+    </ClCompile>
+    <ClCompile Include="Physical\PerfectSpecular.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\camera.h">
@@ -112,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="Entity\Plane.h">
       <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Sampler\Sampler.h">
+      <Filter>Sampler</Filter>
+    </ClInclude>
+    <ClInclude Include="Physical\PerfectSpecular.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

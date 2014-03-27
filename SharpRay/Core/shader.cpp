@@ -20,8 +20,6 @@ void Shader::shade(const Ray* r, const World* world)
 			si->Lo += si->firstHitEntity->material->Lo(si, cosLn, Li*cosLn);
 		}
 	}
-
-	//si->Lo += RColor(0.5);
 }
 
 void Shader::exposure(const World* world)
@@ -34,9 +32,10 @@ void Shader::exposure(const World* world)
 		ray->shadeInfo = &si;
 		si.Lo= RColor(0);
 		castRay(ray, world);
-		shade(ray,world);
-		if (ray->isMajor)
+		shade(ray, world);
+		if (ray->rayLevel == 0)
 			ray->parent.orgPixel->color = si.Lo;
+
 	}
 }
 

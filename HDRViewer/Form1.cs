@@ -76,6 +76,7 @@ namespace HDRViewer
                 int offset = i * Marshal.SizeOf(typeof(HDRPixel));
                 HDRMap[i] = (HDRPixel)Marshal.PtrToStructure(pixelListPtr+offset, typeof(HDRPixel));
             }
+            gcPixelListPtr.Free();
             canvas = new Bitmap(hdr.width, hdr.height);
         }
 

@@ -92,6 +92,8 @@
     <ClCompile Include="light\spotLight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Physical\Material.cpp" />
+    <ClCompile Include="Physical\PerfectSpecular.cpp" />
+    <ClCompile Include="Sampler\Sampler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\camera.h" />
@@ -107,6 +109,8 @@
     <ClInclude Include="light\Light.h" />
     <ClInclude Include="light\spotLight.h" />
     <ClInclude Include="Physical\Material.h" />
+    <ClInclude Include="Physical\PerfectSpecular.h" />
+    <ClInclude Include="Sampler\Sampler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

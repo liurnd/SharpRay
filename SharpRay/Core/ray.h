@@ -11,7 +11,7 @@ struct Ray
 	point3D origin;
 	vector3D direction;
 	Film* currentFilm;
-	bool isMajor;
+	int rayLevel;
 	union{
 		Pixel* orgPixel;
 		Ray* orgRay;
@@ -20,9 +20,9 @@ struct Ray
 	
 	void trace();
 
-	Ray(const point3D& o,const vector3D& d, Film* cf, Pixel* p) :origin(o), direction(normalize(d)), currentFilm(cf){ parent.orgPixel = p; isMajor = true; }
-	Ray(const point3D& o,const vector3D& d, Film* cf, Ray* p) :origin(o), direction(normalize(d)), currentFilm(cf){ parent.orgRay = p; isMajor = false; }
-	Ray(const point3D& o, const vector3D& d) :origin(o), direction(normalize(d)){ isMajor = false; }
+	Ray(const point3D& o, const vector3D& d, Film* cf, Pixel* p) :origin(o), direction(normalize(d)), currentFilm(cf){ parent.orgPixel = p; rayLevel = 0; }
+	Ray(const point3D& o, const vector3D& d, Film* cf, Ray* p) :origin(o), direction(normalize(d)), currentFilm(cf){ parent.orgRay = p; rayLevel = p->rayLevel+1; }
+	Ray(const point3D& o, const vector3D& d) :origin(o), direction(normalize(d)){ rayLevel = -1; }
 	~Ray();
 };
 #endif
