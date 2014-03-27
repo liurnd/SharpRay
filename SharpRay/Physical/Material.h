@@ -1,8 +1,8 @@
 #ifndef _MATERIAL_H_
 #define _MATERIAL_H_
 #include <Core/Color.h>
-class Ray;
-class ShadeInfo;
+struct Ray;
+struct ShadeInfo;
 class Material
 {
 public:

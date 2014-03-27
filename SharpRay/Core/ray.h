@@ -3,26 +3,43 @@
 
 
 #include <Core/fmath.h>
+#include <Core/Color.h>
 class Film;
-class Pixel;
-class ShadeInfo;
+struct Pixel;
+class Entity;
+class World;
+
+struct ShadeInfo
+{
+	float transferFactor;
+	float firstHitT;
+	point3D firstHitPoint;
+	vector3D hitNormal;
+	Entity* firstHitEntity;
+	RColor Lo;
+};
+
 struct Ray
 {
 	point3D origin;
 	vector3D direction;
+	World* world;
 	Film* currentFilm;
-	int rayLevel;
 	union{
 		Pixel* orgPixel;
 		Ray* orgRay;
 	}parent;
-	ShadeInfo* shadeInfo;
+	ShadeInfo shadeInfo;
 	
+	bool hasHit() const;
 	void trace();
 
-	Ray(const point3D& o, const vector3D& d, Film* cf, Pixel* p) :origin(o), direction(normalize(d)), currentFilm(cf){ parent.orgPixel = p; rayLevel = 0; }
-	Ray(const point3D& o, const vector3D& d, Film* cf, Ray* p) :origin(o), direction(normalize(d)), currentFilm(cf){ parent.orgRay = p; rayLevel = p->rayLevel+1; }
-	Ray(const point3D& o, const vector3D& d) :origin(o), direction(normalize(d)){ rayLevel = -1; }
-	~Ray();
+	Ray(const point3D& o, const vector3D& d, Film* cf, Pixel* p, World* w) :origin(o), direction(normalize(d)),world(w), currentFilm(cf){ 
+		parent.orgPixel = p;
+	}
+	Ray(const point3D& o, const vector3D& d, Film* cf, Ray* p, World* w) :origin(o), direction(normalize(d)), world(w), currentFilm(cf){ 
+		parent.orgRay = p;
+	}
+	Ray(const point3D& o, const vector3D& d, World* w) :origin(o), direction(normalize(d)), world(w){ }
 };
 #endif

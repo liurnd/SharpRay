@@ -3,7 +3,7 @@
 #include <deque>
 class World;
 class Entity;
-class Ray;
+struct Ray;
 
 class Shader
 {
@@ -15,25 +15,13 @@ class Shader
 		Ray* getRay(){ auto tmp = rayList.front(); rayList.pop_front();  return tmp; }
 	};
 
-	void castRay(Ray*, const World*);
 public:
 	RayQueue rayQueue;
-	bool castShadowRay(Ray*, const World*) const;
+	
 	void exposure(const World* w);
-	void shade(const Ray*, const World* world);
+	void shade(Ray*, const World* world);
 	Shader();
 	~Shader();
-};
-
-struct ShadeInfo
-{
-	const World* world;
-	float transferFactor;
-	float firstHitT;
-	point3D firstHitPoint;
-	vector3D hitNormal;
-	Entity* firstHitEntity;
-	RColor Lo;
 };
 
 #endif

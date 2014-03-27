@@ -10,7 +10,7 @@ public:
 	RColor color;
 	vector3D position;
 	spotLight();
-	bool Li(Shader* shader, ShadeInfo* si, RColor& colorOut, float& cosin) const;
+	bool Li(Ray* r, RColor& colorOut, float& cosin) const;
 	~spotLight();
 };
 #endif

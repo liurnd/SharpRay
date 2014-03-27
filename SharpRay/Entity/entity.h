@@ -3,7 +3,7 @@
 #include <Core/fmath.h>
 #include <Core/film.h>
 #include <Physical/Material.h>
-class Ray;
+struct Ray;
 
 class Entity
 {

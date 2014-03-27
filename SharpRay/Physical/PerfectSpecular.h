@@ -4,7 +4,7 @@ class PerfectSpecular :
 	public Material
 {
 public:
-	virtual RColor Lo(ShadeInfo* si, float cosLn, RColor Li);
+	RColor Lo(ShadeInfo* si, float cosLn, RColor Li){ return RColor(0); };
 	PerfectSpecular();
 	~PerfectSpecular();
 };
