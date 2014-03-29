@@ -12,6 +12,7 @@ class World
 public:
 	std::list<Entity*> entityList;
 	std::list<Light*> lightList;
+	static World* currentWorld;
 	World();
 	~World();
 };

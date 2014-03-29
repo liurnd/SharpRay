@@ -18,8 +18,22 @@ class Shader
 public:
 	RayQueue rayQueue;
 	
-	void exposure(const World* w);
-	void shade(Ray*, const World* world);
+	/**
+	 * @brief exposure the film
+	 * @details Cast all the ray in rayQueue.
+	 *  When tracing complete, set the color of corresponding pixel of the ray.
+	 */
+	void exposure();
+
+	/**
+	 * @brief Shade a ray
+	 * @details Shade a ray
+	 *   1. Shoot and trace new ray if needed
+	 *   2. Calculate radience shooting directly from all light.
+	 *   3. Calculate output radience, set r->shadeInfo.Lo
+	 * @param r sThe ray you need to shade
+	 */
+	void shade(Ray*);
 	Shader();
 	~Shader();
 };

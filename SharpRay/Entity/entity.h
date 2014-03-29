@@ -12,12 +12,24 @@ public:
 	Material* material;
 	Entity() :kEpsilon(0.0001f){}
 	
-	//Return the normal vector at the giving position.
+	/**
+	 * @brief Return the normal vector at the giving position.
+	 * 
+	 * @param pos The position
+	 * @return The normal vector
+	 */
+
 	virtual vector3D normalAt(const point3D& pos) = 0;
 
-	//Return t, where t*r->direction+r->origin is the first point the ray can hit;
-	//t should be in [0, INFINITY) , if t == INFINITY (!isfinit(t)) means this
-	//ray would not hit the surface.
+	/**
+	 * @brief Return t, where t*r->direction+r->origin is the first point the ray can hit
+	 * @details 	Return t, where t*r->direction+r->origin is the first point the ray can hit,
+	 * t should be in [0, INFINITY).
+	 * if t == INFINITY (in program should be checked by !isfinit(t)) means this ray would not hit the surface.
+	 * 
+	 * @param  Pointer to the ray you want to check
+	 * @return t where t*r->direction+r->origin the first point the giving ray can hit;
+	 */
 	virtual float firstHit(const Ray*)=0;	
 	virtual ~Entity();
 };

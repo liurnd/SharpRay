@@ -79,7 +79,7 @@
       <Filter>Sampler</Filter>
     </ClCompile>
     <ClCompile Include="Physical\PerfectSpecular.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Physical</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -126,7 +126,7 @@
       <Filter>Sampler</Filter>
     </ClInclude>
     <ClInclude Include="Physical\PerfectSpecular.h">
-      <Filter>Header Files</Filter>
+      <Filter>Physical</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

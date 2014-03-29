@@ -7,7 +7,7 @@ bool spotLight::Li(Ray* r, RColor& colorOut, float& cosin) const {
 	cosin = dot(lightDirection, -r->shadeInfo.hitNormal);
 	if (cosin < 0)
 		return false;
-	Ray shadowRay(position, lightDirection,r->world);
+	Ray shadowRay(position, lightDirection);
 	shadowRay.shadeInfo.firstHitT = glm::length(lightDirection);
 	if (shadowRay.hasHit())
 		return false;

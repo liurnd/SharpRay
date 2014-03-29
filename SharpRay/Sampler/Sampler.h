@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _SAMPLER_H_
+#define _SAMPLER_H_
+
 class Sampler
 {
 public:
@@ -8,3 +10,5 @@ public:
 	~Sampler();
 };
 
+
+#endif // !_SAMPLER_H_

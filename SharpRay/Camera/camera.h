@@ -10,13 +10,13 @@ protected:
 	vector3D axis_x, axis_y, direction;
 	point3D position;
 	inline point3D mapFilm2World(float x, float y){ return position+axis_x*x + axis_y*y; }
-	World* currentWorld;
+
 	Shader* shader;
 	Film* lFilm;
 public:
 	camera(const vector3D& u, const vector3D& d, const point3D& pos, Film* f);
 
-	virtual void shoot(World*) = 0;
+	virtual void shoot() = 0;
 	virtual ~camera();
 };
 
@@ -27,7 +27,7 @@ public:
 	pinhole(vector3D up, vector3D d, const point3D& pos, Film* f, float focalLength) :camera(up, d, pos, f){
 		pinholePos = direction*focalLength;
 	}
-	void shoot(World*);
+	void shoot();
 	~pinhole(){}
 };
 
@@ -37,6 +37,6 @@ public:
 	float focalLength;
 	float apertureDiameter;
 	lenCamera();
-	void shoot(World*);
+	void shoot();
 	~lenCamera(){}
 };
