@@ -13,12 +13,12 @@ void Material::shade(Ray* r)
 	//Direct light
 	for (auto i = World::currentWorld->lightList.begin(); i != World::currentWorld->lightList.end(); i++)
 	{
-		RColor Li; vector3D lightAngle;
+		RColor Li; vector3D lightVector;
 
-		if ((*i)->Lo(r, Li, lightAngle))	
+		if ((*i)->Lo(r, Li, lightVector))
 		{
 			//TODO:Non-linear BSDF support
-			si.Lo += si.firstHitEntity->material->bsdf->BRDF(si, r->direction, lightAngle)*Li;
+			si.Lo += kd * si.firstHitEntity->material->bsdf->BRDF(si, r->direction, lightVector)*Li;
 		}
 	}
 	//Mirror light

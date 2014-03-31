@@ -4,6 +4,7 @@
 #include <Camera/camera.h>
 #include <Physical/Material.h>
 #include <Light/Light.h>
+#include <Physical/PerfectSpecular.h>
 int main()
 {
 	Film film(640, 480, 0.01f);
@@ -11,6 +12,7 @@ int main()
 
 	Material matt;
 	matt.kd = 0.6f;
+	matt.bsdf = new PerfectSpecular();
 
 	Entity* s = new Sphere(point3D(0.f, 1.f, 0.f), 0.1f);
 	s->material = &matt;

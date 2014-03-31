@@ -1,8 +1,10 @@
 #include "film.h"
-#include <png.hpp>
+
 #include <cstdio>
 typedef unsigned char byte;
 
+#ifdef PNG_OUTPUT
+#include <png.hpp>
 void Film::dumpToPNGFile(const char* fName)
 {
 	png::image<png::rgb_pixel> fout(filmWidth,filmHeight);
@@ -16,7 +18,7 @@ void Film::dumpToPNGFile(const char* fName)
 	}
 	fout.write(fName);
 }
-
+#endif
 
 struct HDRHeader{
 	int width, height;

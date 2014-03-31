@@ -82,7 +82,7 @@
       <Filter>Physical</Filter>
     </ClCompile>
     <ClCompile Include="Physical\GlossySpecular.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Physical</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
