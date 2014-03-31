@@ -9,6 +9,7 @@ void Material::shade(Ray* r)
 	si.firstHitPoint = r->origin + r->direction*si.firstHitT;
 	si.hitNormal = si.firstHitEntity->normalAt(si.firstHitPoint);
 
+	si.Lo = RColor(0);
 	//Direct light
 	for (auto i = World::currentWorld->lightList.begin(); i != World::currentWorld->lightList.end(); i++)
 	{

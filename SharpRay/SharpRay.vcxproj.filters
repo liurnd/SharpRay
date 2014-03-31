@@ -135,7 +135,7 @@
       <Filter>Physical</Filter>
     </ClInclude>
     <ClInclude Include="Physical\GlossySpecular.h">
-      <Filter>Header Files</Filter>
+      <Filter>Physical</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

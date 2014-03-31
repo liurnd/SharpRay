@@ -37,8 +37,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir);$(SolutionDir)third-party\zlib\include;$(SolutionDir)third-party\glm;$(SolutionDir)third-party\pngpp;$(SolutionDir)third-party\libpng\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)third-party\libpng\lib;$(SolutionDir)third-party\zlib\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)third-party\glm;$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
