@@ -4,8 +4,14 @@
 class Sampler
 {
 public:
-	virtual void initSampler() = 0;
+	virtual void initSampler(int num) = 0;
 
+	struct Sample
+	{
+		float x, y;
+	};
+	Sample* sampleList;
+	int numSample;
 	Sampler();
 	~Sampler();
 };

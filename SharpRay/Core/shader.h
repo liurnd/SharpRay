@@ -25,15 +25,6 @@ public:
 	 */
 	void exposure();
 
-	/**
-	 * @brief Shade a ray
-	 * @details Shade a ray
-	 *   1. Shoot and trace new ray if needed
-	 *   2. Calculate radience shooting directly from all light.
-	 *   3. Calculate output radience, set r->shadeInfo.Lo
-	 * @param r sThe ray you need to shade
-	 */
-	void shade(Ray*);
 	Shader();
 	~Shader();
 };

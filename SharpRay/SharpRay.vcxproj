@@ -91,6 +91,7 @@
     <ClCompile Include="light\Light.cpp" />
     <ClCompile Include="light\spotLight.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Physical\GlossySpecular.cpp" />
     <ClCompile Include="Physical\Material.cpp" />
     <ClCompile Include="Physical\PerfectSpecular.cpp" />
     <ClCompile Include="Sampler\Sampler.cpp" />
@@ -108,6 +109,8 @@
     <ClInclude Include="entity\sphere.h" />
     <ClInclude Include="light\Light.h" />
     <ClInclude Include="light\spotLight.h" />
+    <ClInclude Include="Physical\BSDF.h" />
+    <ClInclude Include="Physical\GlossySpecular.h" />
     <ClInclude Include="Physical\Material.h" />
     <ClInclude Include="Physical\PerfectSpecular.h" />
     <ClInclude Include="Sampler\Sampler.h" />

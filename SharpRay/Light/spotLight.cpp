@@ -2,17 +2,16 @@
 #include <Core/shader.h>
 #include <Core/ray.h>
 
-bool spotLight::Li(Ray* r, RColor& colorOut, float& cosin) const {
-	vector3D lightDirection = r->shadeInfo.firstHitPoint -position;
-	cosin = dot(lightDirection, -r->shadeInfo.hitNormal);
+bool spotLight::Lo(Ray* r, RColor& colorOut, vector3D& lightVector)  const {
+	vector3D lightVector = r->shadeInfo.firstHitPoint - position;
+	float cosin = dot(lightVector, -r->shadeInfo.hitNormal);
 	if (cosin < 0)
 		return false;
-	Ray shadowRay(position, lightDirection);
-	shadowRay.shadeInfo.firstHitT = glm::length(lightDirection);
+	Ray shadowRay(position, lightVector);
+	shadowRay.shadeInfo.firstHitT = glm::length(lightVector);
 	if (shadowRay.hasHit())
 		return false;
 	colorOut = ls*color / shadowRay.shadeInfo.firstHitT;
-	cosin /= shadowRay.shadeInfo.firstHitT;
 	return true;
 }
 

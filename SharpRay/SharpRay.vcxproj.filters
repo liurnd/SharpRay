@@ -81,6 +81,9 @@
     <ClCompile Include="Physical\PerfectSpecular.cpp">
       <Filter>Physical</Filter>
     </ClCompile>
+    <ClCompile Include="Physical\GlossySpecular.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera\camera.h">
@@ -127,6 +130,12 @@
     </ClInclude>
     <ClInclude Include="Physical\PerfectSpecular.h">
       <Filter>Physical</Filter>
+    </ClInclude>
+    <ClInclude Include="Physical\BSDF.h">
+      <Filter>Physical</Filter>
+    </ClInclude>
+    <ClInclude Include="Physical\GlossySpecular.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

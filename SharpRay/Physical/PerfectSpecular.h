@@ -1,11 +1,8 @@
 #pragma once
-#include "Material.h"
+#include <Physical/BSDF.h>
 class PerfectSpecular :
-	public Material
+	public BSDF
 {
-public:
-	RColor Lo(ShadeInfo* si, float cosLn, RColor Li){ return RColor(0); };
-	PerfectSpecular();
-	~PerfectSpecular();
+	float BRDF(const ShadeInfo& si, const vector3D& cameraVector, const vector3D& lightVector);
 };
 

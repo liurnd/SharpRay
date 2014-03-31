@@ -17,10 +17,10 @@ public:
 	 * 
 	 * @param r A traced ray to point out the hit point
 	 * @param colorOut [out] the output radience from the light to the giving hit point
-	 * @param cosin [out] cosin value from light ray to the reversed surface normal
+	 * @param lightVector [out] Vector from  this light to hit point
 	 * @return Whether the light can cast a ray can reach the hit point
 	 */
-	virtual bool Li(Ray* r, RColor& colorOut, float& cosin) const = 0;
+	virtual bool Lo(Ray* r, RColor& colorOut, vector3D& lightVector) const = 0;
 	Light();
 	~Light();
 };

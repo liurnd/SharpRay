@@ -28,6 +28,7 @@ struct Ray
 		Pixel* orgPixel;
 		Ray* orgRay;
 	}parent;
+	int rayLevel;
 	ShadeInfo shadeInfo;
 	
 	/**
@@ -49,9 +50,11 @@ struct Ray
 
 	Ray(const point3D& o, const vector3D& d, Film* cf, Pixel* p) :origin(o), direction(normalize(d)), currentFilm(cf){ 
 		parent.orgPixel = p;
+		rayLevel = 0;
 	}
 	Ray(const point3D& o, const vector3D& d, Film* cf, Ray* p) :origin(o), direction(normalize(d)), currentFilm(cf){ 
 		parent.orgRay = p;
+		rayLevel = p->rayLevel + 1;
 	}
 	Ray(const point3D& o, const vector3D& d) :origin(o), direction(normalize(d)){ }
 };
