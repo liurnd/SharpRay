@@ -4,6 +4,7 @@
 
 typedef glm::vec3 vector3D;
 typedef glm::vec3 point3D;
+typedef glm::vec3 normal3D;
 
 #define dot glm::dot
 #define cross glm::cross

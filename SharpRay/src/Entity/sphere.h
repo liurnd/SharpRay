@@ -10,7 +10,7 @@ private:
 	float radius;
 public:
 	float firstHit(const Ray*);
-	vector3D normalAt(const point3D& pos);
+	normal3D normalAt(const point3D& pos);
 	Sphere(point3D pos, float r) : position(pos), radius(r){ kEpsilon = 0.01f; }
 	~Sphere();
 };

@@ -8,7 +8,7 @@ class spotLight:public Light
 public:
 	float ls;
 	RColor color;
-	vector3D position;
+	point3D position;
 	spotLight();
 	bool Lo(Ray* r, RColor& colorOut, vector3D& lightVector) const;
 	~spotLight();

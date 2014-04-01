@@ -6,7 +6,8 @@
 class camera
 {
 protected:
-	vector3D axis_x, axis_y, direction;
+	vector3D axis_x, axis_y;
+	normal3D direction;
 	point3D position;
 	inline point3D mapFilm2World(float x, float y){ return position+axis_x*x + axis_y*y; }
 

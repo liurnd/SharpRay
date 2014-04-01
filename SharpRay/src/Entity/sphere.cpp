@@ -6,7 +6,7 @@ Sphere::~Sphere()
 {
 }
 
-vector3D Sphere::normalAt(const point3D& pos)
+normal3D Sphere::normalAt(const point3D& pos)
 {
 	return normalize(vector3D(pos - position));
 }

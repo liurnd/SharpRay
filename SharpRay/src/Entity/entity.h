@@ -19,7 +19,7 @@ public:
 	 * @return The normal vector
 	 */
 
-	virtual vector3D normalAt(const point3D& pos) = 0;
+	virtual normal3D normalAt(const point3D& pos) = 0;
 
 	/**
 	 * @brief Return t, where t*r->direction+r->origin is the first point the ray can hit

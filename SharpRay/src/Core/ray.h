@@ -14,7 +14,7 @@ struct ShadeInfo
 	float transferFactor;
 	float firstHitT;
 	point3D firstHitPoint;
-	vector3D hitNormal;
+	normal3D hitNormal;
 	Entity* firstHitEntity;
 	RColor Lo;
 };
@@ -22,7 +22,7 @@ struct ShadeInfo
 struct Ray
 {
 	point3D origin;
-	vector3D direction;
+	normal3D direction;
 	Film* currentFilm;
 	union{
 		Pixel* orgPixel;
@@ -48,14 +48,14 @@ struct Ray
 	 */
 	void trace();
 
-	Ray(const point3D& o, const vector3D& d, Film* cf, Pixel* p) :origin(o), direction(normalize(d)), currentFilm(cf){ 
+	Ray(const point3D& o, const normal3D& d, Film* cf, Pixel* p) :origin(o), direction(d), currentFilm(cf){
 		parent.orgPixel = p;
 		rayLevel = 0;
 	}
-	Ray(const point3D& o, const vector3D& d, Film* cf, Ray* p) :origin(o), direction(normalize(d)), currentFilm(cf){ 
+	Ray(const point3D& o, const normal3D& d, Film* cf, Ray* p) :origin(o), direction(d), currentFilm(cf){
 		parent.orgRay = p;
 		rayLevel = p->rayLevel + 1;
 	}
-	Ray(const point3D& o, const vector3D& d) :origin(o), direction(normalize(d)){ }
+	Ray(const point3D& o, const normal3D& d) :origin(o), direction(d){ }
 };
 #endif
