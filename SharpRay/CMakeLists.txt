@@ -1,7 +1,8 @@
 PROJECT(SharpRay)
 FILE(GLOB_RECURSE SRC_CPP "src/*.cpp")
+FILE(GLOB_RECURSE SRC_H "src/*.h")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/third-party)
 
-add_executable(main ${SRC_CPP})
+add_executable(main ${SRC_CPP} ${SRC_H})
