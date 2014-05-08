@@ -2,14 +2,33 @@
 #define _SAMPLER_H_
 
 #include <cstdlib>
-
+#include <stdint.h>
 struct RandomGen{
-	virtual float getRandomF(){
-		return static_cast <float>(rand()) / static_cast <float>(RAND_MAX);
+	float getRandomF(){
+		return static_cast <float>(getRandomI()) / static_cast <float>(RAND_MAX);
 	}
-	virtual float getRandomF(float a, float b) { return (b - a)*getRandomF() + a; }
-	virtual int getRandomI(){ return rand(); };
-	virtual int getRandomI(int a, int b){ return a + getRandomI() % (b - a); }
+	float getRandomF(float a, float b) { return (b - a)*getRandomF() + a; }
+	virtual uint32_t getRandomI(){ return rand(); };
+	uint32_t getRandomI(int a, int b){ return a + getRandomI() % (b - a); }
+};
+
+struct mtRandom:RandomGen{
+	uint32_t getRandomI()
+	{
+		uint32_t t;
+		t = x ^ (x << 11);
+    	x = y; y = z; z = w;
+    	return w = w ^ (w >> 19) ^ t ^ (t >> 8);
+	}
+	mtRandom()
+	{
+		x = rand();
+		y = rand();
+		z = rand();
+		w = rand();
+	}
+private:
+	uint32_t x, y, z, w;
 };
 
 #include <Core/fmath.h>
@@ -20,13 +39,17 @@ public:
 	virtual void shuffleIndex(){}
 	void mapToDisk();
 	void mapToHemiSphere(float e);
-	Sampler(int num) :numSample(num){ sampleList = new normal3D[num]; }
+	Sampler(int num) :numSample(num){ sampleList = new normal3D[num]; randomGen = new mtRandom();}
 
 	normal3D* sampleList;
-	RandomGen randomGen;
+	RandomGen* randomGen;
 	int numSample;
 	Sampler();
-	~Sampler();
+	Sampler::~Sampler()
+	{
+		delete [] sampleList;
+		delete randomGen;
+	}
 };
 
 

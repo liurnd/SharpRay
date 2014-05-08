@@ -1,10 +1,6 @@
 #include "Sampler.h"
 #include "Core/fmath.h"
 
-Sampler::~Sampler()
-{
-	delete [] sampleList;
-}
 
 void Sampler::mapToDisk()
 {
