@@ -14,9 +14,10 @@ bool Ray::hasHit() const
 	return false;
 }
 
-void Ray::trace()
+bool Ray::trace()
 {
 	shadeInfo.firstHitT = INFINITY;
+    shadeInfo.firstHitEntity= NULL;
 	for (auto i = World::currentWorld->entityList.begin(); i != World::currentWorld->entityList.end(); i++)
 	{
 		float t = (*i)->firstHit(this);
@@ -31,5 +32,10 @@ void Ray::trace()
 		}
 	}
 
-	shadeInfo.firstHitPoint = origin + direction*shadeInfo.firstHitT;
+    if (shadeInfo.firstHitEntity == NULL)
+        return false;
+
+    vector3D t = direction * shadeInfo.firstHitT;
+    shadeInfo.firstHitPoint = origin + t;
+    return true;
 }

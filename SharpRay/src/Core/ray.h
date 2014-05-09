@@ -1,8 +1,7 @@
 #ifndef _RAY_H_
 #define _RAY_H_
 
-
-#include <Core/fmath.h>
+#include <Core/BaseDS.h>
 #include <Core/Color.h>
 class Film;
 struct Pixel;
@@ -28,7 +27,9 @@ struct Ray
 		Pixel* orgPixel;
 		Ray* orgRay;
 	}parent;
-	int rayLevel;
+
+    RayLevelType rayLevel;
+
 	ShadeInfo shadeInfo;
 	
 	/**
@@ -45,17 +46,27 @@ struct Ray
 	 * @details
 	 *  1. Find the nearest surface the ray may hit in the world
 	 *  2. Calculate and set shadeInfo
+     * @return Whether this ray hit something
 	 */
-	void trace();
+    bool trace();
 
-	Ray(const point3D& o, const normal3D& d, Film* cf, Pixel* p) :origin(o), direction(d), currentFilm(cf){
+
+    Ray(const point3D& o, const normal3D& d, Film* cf, Pixel* p) :
+        origin(o),
+        direction(d),
+        currentFilm(cf){
 		parent.orgPixel = p;
 		rayLevel = 0;
 	}
-	Ray(const point3D& o, const normal3D& d, Film* cf, Ray* p) :origin(o), direction(d), currentFilm(cf){
+    Ray(const point3D& o, const normal3D& d, Ray* p) :
+        origin(o),
+        direction(d),
+        currentFilm(p->currentFilm){
 		parent.orgRay = p;
 		rayLevel = p->rayLevel + 1;
 	}
-	Ray(const point3D& o, const normal3D& d) :origin(o), direction(d){ }
+    Ray(const point3D& o, const normal3D& d) :
+        origin(o),
+        direction(d){ }
 };
 #endif

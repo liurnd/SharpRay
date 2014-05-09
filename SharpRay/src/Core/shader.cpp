@@ -10,9 +10,11 @@ void Shader::exposure()
 	while (!rayQueue.rayList.empty())
 	{
 		auto ray = rayQueue.getRay();
-		ray->trace();
-		ray->shadeInfo.firstHitEntity->material->shade(ray);
-		ray->parent.orgPixel->color = ray->shadeInfo.Lo;
+        if (ray->trace())
+        {
+            ray->shadeInfo.firstHitEntity->material->shade(ray);
+            ray->parent.orgPixel->color = ray->shadeInfo.Lo;
+        }
 	}
 }
 

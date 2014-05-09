@@ -3,29 +3,12 @@
 #include <cstdio>
 typedef unsigned char byte;
 
-#ifdef PNG_OUTPUT
-#include <png.hpp>
-void Film::dumpToPNGFile(const char* fName)
-{
-	png::image<png::rgb_pixel> fout(filmWidth,filmHeight);
-	for (int i = 0; i < pixelCnt; i++)
-	{
-		int I = i / filmWidth;
-		int J = i % filmWidth;
-		fout.set_pixel(J, I, png::rgb_pixel((byte)(pixelList[i].color.r*100.f),
-			(byte)(pixelList[i].color.g * 100.f),
-			(byte)(pixelList[i].color.b * 100.f)));
-	}
-	fout.write(fName);
-}
-#endif
-
 struct HDRHeader{
 	int width, height;
 };
 struct HDRPixel{
 	int x, y;
-	float r, g, b;
+    ColorFloat r, g, b;
 	HDRPixel(int xx,int yy,const Pixel& p) :x(xx),y(yy),r(p.color.r), g(p.color.g), b(p.color.b){}
 };
 

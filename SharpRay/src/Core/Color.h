@@ -9,5 +9,4 @@ struct RGBAColor
 typedef glm::vec3 RColor;
 
 RGBAColor& projectToRGB(const RColor&, float ISO);
-void colorMix(RGBAColor& origin, const RGBAColor& newColor, float transferFactor);
 #endif

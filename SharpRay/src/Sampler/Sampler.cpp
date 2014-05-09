@@ -1,9 +1,10 @@
 #include "Sampler.h"
-#include "Core/fmath.h"
+#include "Core/BaseDS.h"
 
 
 void Sampler::mapToDisk()
 {
+    type = disk;
 	for (int i = 0; i < numSample; i++)
 	{
 		normal3D& n = sampleList[i];
@@ -23,6 +24,7 @@ void Sampler::mapToDisk()
 
 void Sampler::mapToHemiSphere(float e)
 {
+    type = hemisphere;
 	for (int i = 0; i < numSample; i++)
 	{
 		normal3D& n = sampleList[i];

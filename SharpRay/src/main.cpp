@@ -5,13 +5,18 @@
 #include <Physical/Material.h>
 #include <Light/Light.h>
 #include <Physical/PerfectSpecular.h>
+#include <Sampler/Sampler.h>
 int main()
 {
 	Film film(640, 480, 0.01f);
 	World::currentWorld = new World();
 
 	Material matt;
+    matt.sampler = new NRook(1024);
+    matt.sampler->mapToHemiSphere(100);
 	matt.kd = 0.6f;
+	matt.color = RColor(1, 1, 1);
+    matt.ka = 0.1f;
 	matt.bsdf = new PerfectSpecular();
 
 	Entity* s = new Sphere(point3D(0.f, 1.f, 0.f), 0.1f);

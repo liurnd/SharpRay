@@ -1,6 +1,6 @@
 #ifndef _SPHERE_H_
 #define _SPHERE_H_
-#include <Core/fmath.h>
+#include <Core/BaseDS.h>
 #include <Entity/entity.h>
 class Sphere :
 	public Entity

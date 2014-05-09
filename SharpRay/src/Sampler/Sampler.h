@@ -8,7 +8,7 @@ struct RandomGen{
 		return static_cast <float>(getRandomI()) / static_cast <float>(RAND_MAX);
 	}
 	float getRandomF(float a, float b) { return (b - a)*getRandomF() + a; }
-	virtual uint32_t getRandomI(){ return rand(); };
+    virtual uint32_t getRandomI(){ return rand(); }
 	uint32_t getRandomI(int a, int b){ return a + getRandomI() % (b - a); }
 };
 
@@ -31,18 +31,34 @@ private:
 	uint32_t x, y, z, w;
 };
 
-#include <Core/fmath.h>
+#include <Core/BaseDS.h>
+
+enum samplerType{
+    hemisphere,
+    square,
+    disk
+} ;
+
 class Sampler
 {
+protected:
+    RandomGen* randomGen;
 public:
 	virtual void shuffle() = 0;
-	virtual void shuffleIndex(){}
+    virtual void shuffleIndex(int num){
+        if (indexList==NULL)
+            indexList = new int[num];
+        for (int i = 0; i < num ;i++)
+            indexList[i] = randomGen->getRandomI(0,numSample);
+    }
+
+    samplerType type;
 	void mapToDisk();
 	void mapToHemiSphere(float e);
-	Sampler(int num) :numSample(num){ sampleList = new normal3D[num]; randomGen = new mtRandom();}
+    Sampler(int num) :numSample(num), type(square){indexList = NULL; sampleList = new normal3D[num]; randomGen = new mtRandom();}
 
-	normal3D* sampleList;
-	RandomGen* randomGen;
+    normal3D* sampleList;
+    int* indexList;
 	int numSample;
 	Sampler();
 	Sampler::~Sampler()

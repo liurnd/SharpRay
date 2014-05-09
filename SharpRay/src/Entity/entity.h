@@ -1,6 +1,6 @@
 #ifndef _ENTITY_H_
 #define _ENTITY_H_
-#include <Core/fmath.h>
+#include <Core/BaseDS.h>
 #include <Core/film.h>
 #include <Physical/Material.h>
 struct Ray;

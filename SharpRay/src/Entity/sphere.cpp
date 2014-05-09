@@ -1,6 +1,6 @@
 #include <Entity/sphere.h>
 #include <Core/ray.h>
-#include <Core/fmath.h>
+#include <Core/BaseDS.h>
 
 Sphere::~Sphere()
 {
@@ -8,7 +8,7 @@ Sphere::~Sphere()
 
 normal3D Sphere::normalAt(const point3D& pos)
 {
-	return normalize(vector3D(pos - position));
+    return normalize(pos - position);
 }
 
 float Sphere::firstHit(const Ray* r)

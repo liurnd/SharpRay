@@ -1,6 +1,6 @@
 #ifndef _LIGHT_H_
 #define _LIGHT_H_
-#include <Core/fmath.h>
+#include <Core/BaseDS.h>
 #include <Core/Color.h>
 struct ShadeInfo;
 class Shader;
