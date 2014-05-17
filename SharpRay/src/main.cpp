@@ -47,7 +47,7 @@ int main()
 	sp3.color = RColor(0.f, 1.f, 0.f);
 	World::currentWorld->lightList.push_back(&sp3);
 
-	pinhole c(vector3D(0,1,0),vector3D(0,-1.f,-4.f),point3D(0,1,4),&film,2.0f);
+    pinhole c(vector3D(0,1,0),normalize(vector3D(0,-1.f,-4.f)),point3D(0,1,4),&film,2.0f);
 
 	
 	c.shoot();
