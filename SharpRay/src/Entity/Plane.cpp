@@ -1,10 +1,10 @@
 #include "Plane.h"
 #include <Core/ray.h>
 
-float Plane::firstHit(const Ray* r)
+bool Plane::firstHit(const Ray* r, CoordFloat& t)
 {
-	float x = (dot(position - r->origin, normal) / dot(r->direction, normal));
-	if (x < 0)
-		return INFINITY;
-	return x;
+    t = (dot(position - r->origin, normal) / dot(r->direction, normal));
+    if (t < 0)
+        return false;
+    return true;
 }

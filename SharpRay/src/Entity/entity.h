@@ -30,7 +30,7 @@ public:
 	 * @param  Pointer to the ray you want to check
 	 * @return t where t*r->direction+r->origin the first point the giving ray can hit;
 	 */
-	virtual float firstHit(const Ray*)=0;	
+    virtual bool firstHit(const Ray*, CoordFloat& t)=0;
 	virtual ~Entity();
 };
 
