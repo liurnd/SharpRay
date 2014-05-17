@@ -7,7 +7,7 @@ bool spotLight::Lo(Ray* r, RColor& colorOut, vector3D& lightVector)  const {
 	float cosin = dot(lightVector, -r->shadeInfo.hitNormal);
 	if (cosin < 0)
 		return false;
-	Ray shadowRay(position, lightVector);
+	Ray shadowRay(position, normalize(lightVector));
 	shadowRay.shadeInfo.firstHitT = glm::length(lightVector);
 	if (shadowRay.hasHit())
 		return false;

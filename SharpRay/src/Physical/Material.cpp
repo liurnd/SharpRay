@@ -22,12 +22,12 @@ void Material::shade(Ray* r)
 		if ((*i)->Lo(r, Li, lightVector))
 		{
 			//TODO:Non-linear BSDF support
-            si.Lo += Li*(kd * bsdf->BRDF(si, r->direction, lightVector));
+            si.Lo += Li*(kd * bsdf->BRDF(si, r->direction, lightVector))*(-dot(si.hitNormal,normalize(lightVector)));
 		}
 	}
 
     //Indirect light
-    normal3D mainDirection = r->direction + si.hitNormal* (dot(si.hitNormal,r->direction)*2);
+    /*normal3D mainDirection = r->direction + si.hitNormal* (dot(si.hitNormal,r->direction)*2);
     coordSystem cs(mainDirection);
     if (r->rayLevel < traceLevelLimit && ka > 0)
     {
@@ -49,7 +49,7 @@ void Material::shade(Ray* r)
             delete refRay;
         }
 	}
-
+	*/
 	//Lambertian
 
 

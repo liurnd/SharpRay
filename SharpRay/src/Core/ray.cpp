@@ -35,7 +35,5 @@ bool Ray::trace()
     if (shadeInfo.firstHitEntity == NULL)
         return false;
 
-    vector3D t = direction * shadeInfo.firstHitT;
-    shadeInfo.firstHitPoint = origin + t;
     return true;
 }
