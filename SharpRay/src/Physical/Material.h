@@ -17,6 +17,7 @@ public:
     static RayLevelType traceLevelLimit;
     static RayLevelType numSample;
 
-	void shade(Ray* r);
+    virtual void shade(Ray* r);
 };
+#include <Physical/mirror.h>
 #endif

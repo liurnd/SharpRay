@@ -11,6 +11,9 @@ int main()
 	Film film(640, 480, 0.01f);
 	World::currentWorld = new World();
 
+
+    Mirror mi;
+    mi.kd=1.0f;
 	Material matt;
     matt.sampler = new NRook(1024);
     matt.sampler->mapToHemiSphere(100);
@@ -19,12 +22,12 @@ int main()
     matt.ka = 0.1f;
 	matt.bsdf = new PerfectSpecular();
 
-	Entity* s = new Sphere(point3D(0.f, 1.f, 0.f), 0.1f);
+	Entity* s = new Sphere(point3D(0.f, 1.f, 0.f), 0.3f);
 	s->material = &matt;
 	World::currentWorld->entityList.push_back(s);
 
 	s = new Sphere(point3D(0, 0, 0), 0.5f);
-	s->material = &matt;
+    s->material = &mi;
 	World::currentWorld->entityList.push_back(s);
 	
 	s = new Plane(vector3D(0, 1, 0), point3D(0, -2, 0));
