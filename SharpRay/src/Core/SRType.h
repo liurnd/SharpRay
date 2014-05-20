@@ -3,5 +3,5 @@
 #include <stdint.h>
 typedef float ColorFloat;
 typedef float CoordFloat;
-typedef uint8_t RayLevelType;
+typedef int RayLevelType;
 #endif // SRTYPE_H

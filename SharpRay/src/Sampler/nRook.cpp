@@ -7,6 +7,7 @@ NRook::NRook(int num) :Sampler(num)
 	{
 		sampleList[i].x = static_cast<float>(i) / numSample;
 		sampleList[i].y = static_cast<float>(i) / numSample;
+        sampleList[i].z = 0;
 	}
 }
 

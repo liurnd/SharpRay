@@ -20,7 +20,8 @@ public:
 	 * @param lightVector [out] Vector from  this light to hit point
 	 * @return Whether the light can cast a ray can reach the hit point
 	 */
-	virtual bool Lo(Ray* r, RColor& colorOut, vector3D& lightVector) const = 0;
+    virtual bool Lo(Ray* r, RColor& colorOut, vector3D& lightVector) = 0;
+
 	Light();
 	~Light();
 };

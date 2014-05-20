@@ -12,10 +12,10 @@ public:
 	float ka, kd;
     RColor color;
 	BSDF* bsdf;
-    Sampler* sampler;   //Must be convert to hemisphere before put here
+    Sampler* sampler;
 
     static RayLevelType traceLevelLimit;
-    static RayLevelType numSample;
+    static RayLevelType numAreaLightSample;
 
     virtual void shade(Ray* r);
 };

@@ -2,12 +2,8 @@
 #include "Core/BaseDS.h"
 
 
-void Sampler::mapToDisk()
+normal3D Sampler::mapToDisk(const normal3D &n)
 {
-    type = disk;
-	for (int i = 0; i < numSample; i++)
-	{
-		normal3D& n = sampleList[i];
 		float x = n.x * 2 - 1;
 		float y = n.y * 2 - 1;
 		float r, phi;
@@ -17,23 +13,14 @@ void Sampler::mapToDisk()
 		else if (x<y&&x<-y){ r = -x; phi = pi / 4 * (4+ y / x); }
 		else{ r = -y; phi = pi / 4 * (6 - y / x); }
 
-		n.x = r*cos(phi);
-		n.y = r*sin(phi);
-	}
+        return normal3D(r*cos(phi),r*sin(phi), 0);
 }
 
-void Sampler::mapToHemiSphere(float e)
+normal3D Sampler::mapToHemiSphere(const normal3D &n, float e)
 {
-    type = hemisphere;
-	for (int i = 0; i < numSample; i++)
-	{
-		normal3D& n = sampleList[i];
-		float cos_phi = cos(2 * pi*n.x);
-		float sin_phi = sin(2 * pi*n.x);
-		float cos_theta = pow(1.0f - n.y, 1.f / (e + 1.f));
-		float sin_theta = sqrt(1.f - cos_theta*cos_theta);
-		n.x = sin_theta*cos_phi;
-		n.y = sin_theta*sin_phi;
-		n.z = cos_theta;
-	}
+    float cos_phi = cos(2 * pi*n.x);
+    float sin_phi = sin(2 * pi*n.x);
+    float cos_theta = pow(1.0f - n.y, 1.f / (e + 1.f));
+    float sin_theta = sqrt(1.f - cos_theta*cos_theta);
+    return normal3D(sin_theta*cos_phi, sin_theta*sin_phi, cos_theta);
 }

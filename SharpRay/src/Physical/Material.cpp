@@ -3,7 +3,7 @@
 #include <Sampler/Sampler.h>
 #include <Physical/BSDF.h>
 
-RayLevelType Material::numSample = 8;
+RayLevelType Material::numAreaLightSample = 1024;
 RayLevelType Material::traceLevelLimit = 4;
 
 void Material::shade(Ray* r)
@@ -18,13 +18,33 @@ void Material::shade(Ray* r)
 	for (auto i = World::currentWorld->lightList.begin(); i != World::currentWorld->lightList.end(); i++)
 	{
 		RColor Li; vector3D lightVector;
-
-		if ((*i)->Lo(r, Li, lightVector))
-		{
-			//TODO:Non-linear BSDF support
+        if ((*i)->Lo(r, Li, lightVector))
             si.Lo += Li*(kd * bsdf->BRDF(si, r->direction, lightVector))*(-dot(si.hitNormal,normalize(lightVector)));
-		}
 	}
+
+    //Area Light
+    for (auto light = World::currentWorld->areaLightList.begin();light != World::currentWorld->areaLightList.end();light++)
+    {
+        RColor Li; RColor tmpLo;
+        vector3D lightVector;// From light sample point to hit point
+
+        sampler->shuffleIndex(numAreaLightSample);
+        sampler->type = square;
+        for (int i = 0; i < numAreaLightSample; i++)
+        {
+            point3D samplePoint;
+            ColorFloat pdf;
+            if (!(*light)->CalcSample(r->shadeInfo.firstHitPoint, (*sampler)[i], samplePoint, Li,pdf))
+                    continue;
+            lightVector = r->shadeInfo.firstHitPoint - samplePoint;
+            CoordFloat distance = glm::length(lightVector);
+            Ray shadowRay(samplePoint,lightVector/distance);
+            shadowRay.shadeInfo.firstHitT = distance;
+            if (!shadowRay.hasHit())
+                tmpLo += Li*((kd * bsdf->BRDF(si, r->direction, lightVector))*(-dot(si.hitNormal,lightVector)/distance)/ pdf);
+        }
+        si.Lo += (tmpLo/static_cast<float>(numAreaLightSample));
+    }
 
     //Indirect light
     /*normal3D mainDirection = r->direction + si.hitNormal* (dot(si.hitNormal,r->direction)*2);

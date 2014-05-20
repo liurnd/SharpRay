@@ -10,7 +10,7 @@ public:
 	RColor color;
 	point3D position;
 	spotLight();
-	bool Lo(Ray* r, RColor& colorOut, vector3D& lightVector) const;
+    bool Lo(Ray* r, RColor& colorOut, vector3D& lightVector);
 	~spotLight();
 };
 #endif

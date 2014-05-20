@@ -12,10 +12,10 @@ typedef glm::vec3 normal3D;
 #define cross glm::cross
 #define normalize glm::normalize
 #define floatMin 0.0000001f
-struct coordSystem
+struct CoordSystem
 {
     normal3D u, v, w;
-    coordSystem(const normal3D& ww):w(ww)
+    CoordSystem(const normal3D& ww):w(ww)
     {
         normal3D tx(1,0,0);
         if (w.y < floatMin && w.z < floatMin)
