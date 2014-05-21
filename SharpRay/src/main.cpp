@@ -4,7 +4,7 @@
 #include <Camera/camera.h>
 #include <Physical/Material.h>
 #include <Light/Light.h>
-#include <Physical/PerfectSpecular.h>
+#include <Physical/BSDF/BSDF.h>
 #include <Light/arealight.h>
 #include <Sampler/Sampler.h>
 int main()
@@ -15,12 +15,11 @@ int main()
     Mirror mi;
     mi.kd=1.0f;
 	Material matt;
-    matt.sampler = new NRook(1024);
+    matt.sampler = new NRook(10240);
     matt.sampler->shuffle();
 	matt.kd = 0.6f;
 	matt.color = RColor(1, 1, 1);
     matt.ka = 0.1f;
-    matt.bsdf = new PerfectSpecular();
 
     //Entity* s = new Sphere(point3D(0.f, 1.f, 0.f), 0.3f);
     //s->material = &matt;

@@ -2,6 +2,7 @@
 #define _MATERIAL_H_
 #include <Core/Color.h>
 #include <Core/BaseDS.h>
+#include <Physical/BSDF/bsdf.h>
 struct Ray;
 struct ShadeInfo;
 class BSDF;
@@ -18,6 +19,10 @@ public:
     static RayLevelType numAreaLightSample;
     static RayLevelType numGlobalSample;
 
+    Material()
+    {
+        bsdf = new Lambertian();
+    }
     virtual void shade(Ray* r);
 };
 #include <Physical/mirror.h>

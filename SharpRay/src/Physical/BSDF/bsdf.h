@@ -10,4 +10,8 @@ public:
     virtual float BRDF(const ShadeInfo& si, const vector3D& wo, const vector3D& wi) = 0;
     virtual float BTDF(const ShadeInfo& si, const vector3D& wo, const vector3D& wi){ return 0; }
 };
+
+#include "GlossySpecular.h"
+#include "lambertian.h"
+#include "PerfectSpecular.h"
 #endif

@@ -1,9 +1,10 @@
 #include <Physical/Material.h>
 #include <Core/world.h>
 #include <Sampler/Sampler.h>
-#include <Physical/BSDF.h>
 
-RayLevelType Material::numAreaLightSample = 1024;
+#include <Physical/BSDF/BSDF.h>
+
+RayLevelType Material::numAreaLightSample = 4096;
 RayLevelType Material::numGlobalSample = 16;
 RayLevelType Material::traceLevelLimit = 4;
 
@@ -29,8 +30,11 @@ void Material::shade(Ray* r)
         RColor Li; RColor tmpLo;
         vector3D lightVector;// From light sample point to hit point
 
-        sampler->shuffleIndex(numAreaLightSample);
-        sampler->type = square;
+#pragma omp critical(shuffleSampler)
+        {
+            sampler->shuffleIndex(numAreaLightSample);
+            sampler->type = square;
+        }
         for (int i = 0; i < numAreaLightSample; i++)
         {
             point3D samplePoint;

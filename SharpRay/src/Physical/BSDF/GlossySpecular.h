@@ -1,5 +1,5 @@
 #pragma once
-#include <Physical/BSDF.h>
+#include <Physical/BSDF/bsdf.h>
 class GlossySpecular : BSDF
 {
 public:
