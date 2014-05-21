@@ -4,6 +4,7 @@
 #include <Physical/BSDF.h>
 
 RayLevelType Material::numAreaLightSample = 1024;
+RayLevelType Material::numGlobalSample = 16;
 RayLevelType Material::traceLevelLimit = 4;
 
 void Material::shade(Ray* r)

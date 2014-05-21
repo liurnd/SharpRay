@@ -20,7 +20,7 @@ int main()
 	matt.kd = 0.6f;
 	matt.color = RColor(1, 1, 1);
     matt.ka = 0.1f;
-	matt.bsdf = new PerfectSpecular();
+    matt.bsdf = new PerfectSpecular();
 
     //Entity* s = new Sphere(point3D(0.f, 1.f, 0.f), 0.3f);
     //s->material = &matt;

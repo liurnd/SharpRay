@@ -7,21 +7,18 @@
 
 void Shader::exposure()
 {
-
-    int i= 0;
-	while (!rayQueue.rayList.empty())
-	{
-        auto ray = rayQueue.getRay();
-
+    Ray** rayArray = rayQueue.getRayArray();
+    int n = rayQueue.rayList.size();
+#pragma omp parallel for
+    for (int i = 0; i < n; i++)
+    {
+        auto ray = rayArray[i];
         if (ray->trace())
         {
             ray->shadeInfo.firstHitEntity->material->shade(ray);
             ray->parent.orgPixel->color = ray->shadeInfo.Lo;
         }
-        if (i%100 == 0)
-            printf("Shading: %.2f%%\n", static_cast<float>(i) * 100 / ray->currentFilm->pixelCnt);
-        i++;
-	}
+    }
 }
 
 

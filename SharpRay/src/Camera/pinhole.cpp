@@ -9,5 +9,6 @@ void pinhole::shoot()
         point3D pixelPos = mapFilm2World(-nPixel->coord.x, -nPixel->coord.y);
         shader->rayQueue.addRay(new Ray(pixelPos, normalize(pinholePos), lFilm, nPixel));
 	}
+
 	shader->exposure();
 }
