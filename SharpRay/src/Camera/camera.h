@@ -25,7 +25,7 @@ class pinhole:camera
 public:
 	point3D pinholePos;
 	pinhole(vector3D up, vector3D d, const point3D& pos, Film* f, float focalLength) :camera(up, d, pos, f){
-        pinholePos = direction*focalLength;
+        pinholePos = position + direction*focalLength;
 	}
 	void shoot();
 	~pinhole(){}

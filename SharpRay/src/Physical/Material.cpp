@@ -4,9 +4,13 @@
 
 #include <Physical/BSDF/BSDF.h>
 
-RayLevelType Material::numAreaLightSample = 4096;
-RayLevelType Material::numGlobalSample = 16;
+RayLevelType Material::numAreaLightSample = 8;
+RayLevelType Material::numGlobalSample = 4;
 RayLevelType Material::traceLevelLimit = 4;
+
+Material::Material()
+{
+}
 
 void Material::shade(Ray* r)
 {
@@ -29,17 +33,12 @@ void Material::shade(Ray* r)
     {
         RColor Li; RColor tmpLo;
         vector3D lightVector;// From light sample point to hit point
-
-#pragma omp critical(shuffleSampler)
-        {
-            sampler->shuffleIndex(numAreaLightSample);
-            sampler->type = square;
-        }
+        sampler->shuffleIndex(numAreaLightSample);
         for (int i = 0; i < numAreaLightSample; i++)
         {
             point3D samplePoint;
             ColorFloat pdf;
-            if (!(*light)->CalcSample(r->shadeInfo.firstHitPoint, (*sampler)[i], samplePoint, Li,pdf))
+            if (!(*light)->CalcSample(r->shadeInfo.firstHitPoint, sampler->sampleList[i], samplePoint, Li,pdf))
                     continue;
             lightVector = r->shadeInfo.firstHitPoint - samplePoint;
             CoordFloat distance = glm::length(lightVector);
@@ -52,31 +51,28 @@ void Material::shade(Ray* r)
     }
 
     //Indirect light
-    /*normal3D mainDirection = r->direction + si.hitNormal* (dot(si.hitNormal,r->direction)*2);
-    coordSystem cs(mainDirection);
+
     if (r->rayLevel < traceLevelLimit && ka > 0)
     {
-        assert(sampler->type==hemisphere);
-
-        sampler->shuffleIndex(numSample);
-        for (int i = 0; i < numSample; i++)
+        sampler->shuffleIndex(numGlobalSample);
+        RColor tmpC(0);
+        for (int i = 0; i < numGlobalSample; i++)
         {
-            normal3D refDirection = cs(sampler->sampleList[i]); //Reflect ray direction
-            if (dot(refDirection,si.hitNormal)<0)
-                continue;
-            Ray *refRay = new Ray(si.firstHitPoint,refDirection,r);
+            normal3D sampleOut;ColorFloat pdf;
+            ColorFloat f = bsdf->sample_BRDF(sampler->sampleList[i],si,r->direction,sampleOut,pdf);
+            Ray *refRay = new Ray(si.firstHitPoint,sampleOut,r);
             if (refRay->trace())
             {
                 refRay->shadeInfo.firstHitEntity->material->shade(refRay);
-                CoordFloat cos = dot(refDirection,mainDirection)/(refDirection.length()*mainDirection.length());
-                si.Lo += refRay->shadeInfo.Lo * pow(cos,bsdf->getE());
+                ColorFloat cosin = dot(sampleOut, si.hitNormal);
+
+                tmpC += refRay->shadeInfo.Lo * (ka * f * cosin/ pdf);
             }
             delete refRay;
         }
-	}
-	*/
+
+        si.Lo += (tmpC / static_cast<float>(numGlobalSample));
+    }
 	//Lambertian
-
-
     si.Lo = si.Lo * color;
 }

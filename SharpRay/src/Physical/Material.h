@@ -19,10 +19,7 @@ public:
     static RayLevelType numAreaLightSample;
     static RayLevelType numGlobalSample;
 
-    Material()
-    {
-        bsdf = new Lambertian();
-    }
+    Material();
     virtual void shade(Ray* r);
 };
 #include <Physical/mirror.h>

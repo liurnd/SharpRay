@@ -45,25 +45,15 @@ protected:
     RandomGen* randomGen;
 public:
 	virtual void shuffle() = 0;
-    void shuffleIndex(int num)
-    {
-        for (int i = 0; i < num ;i++)
-            indexList[i] = randomGen->getRandomI(0,numSample);
-    }
-
+    void shuffleIndex(int num);
     void shuffleIndex(){
-        for (int i = 0; i < numSample ;i++)
-            indexList[i] = randomGen->getRandomI(0,numSample);
+        shuffleIndex(numSample);
     }
 
     samplerType type;
     static normal3D mapToDisk(const normal3D&);
     static normal3D mapToHemiSphere(const normal3D&, float e);
-    Sampler(int num) :numSample(num), type(square){
-        indexList = new int[num];
-        sampleList = new normal3D[num];
-        randomGen = new mtRandom();
-    }
+    Sampler(int num);
 
     normal3D* sampleList;
     int* indexList;
@@ -71,25 +61,9 @@ public:
     float hemisphereExp;
 	Sampler();
 
-    normal3D operator [](int index){
-        normal3D& sample = sampleList[indexList[index]];
-        switch(type)
-        {
-        case square:
-            return sample;
-        case disk:
-            return mapToDisk(sample);
-        case hemisphere:
-            return mapToHemiSphere(sample, hemisphereExp);
-        }
-    }
+    normal3D operator [](int index);
 
-    virtual Sampler::~Sampler()
-	{
-		delete [] sampleList;
-        delete [] indexList;
-		delete randomGen;
-	}
+    virtual Sampler::~Sampler();
 };
 
 

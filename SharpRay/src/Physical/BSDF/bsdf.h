@@ -6,9 +6,18 @@ class Sampler;
 class BSDF
 {
 public:
-    virtual float getE(){return -1;}
-    virtual float BRDF(const ShadeInfo& si, const vector3D& wo, const vector3D& wi) = 0;
-    virtual float BTDF(const ShadeInfo& si, const vector3D& wo, const vector3D& wi){ return 0; }
+    /**
+     * @brief sample_BRDF Map a square sample to BSDF hemisphere sample, return hemishpere sample ,BRDF and pdf
+     * @param sampleIn  [in] a square sample with equiprobability in [0,1) * [0,1]
+     * @param si        [in] shadeInfo at hitpoint
+     * @param wo        [in] out vector
+     * @param sampleOut [out] the direction of sample ray
+     * @param pdf       [out] the probability of this direction
+     * @return          BRDF value
+     */
+    virtual ColorFloat sample_BRDF(const normal3D& sampleIn,  const ShadeInfo& si, const vector3D& wo, normal3D& sampleOut, float& pdf) = 0;
+    virtual ColorFloat BRDF(const ShadeInfo& si, const vector3D& wo, const vector3D& wi) = 0;
+    virtual ColorFloat BTDF(const ShadeInfo& si, const vector3D& wo, const vector3D& wi){ return 0; }
 };
 
 #include "GlossySpecular.h"

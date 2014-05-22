@@ -3,11 +3,13 @@
 
 void pinhole::shoot()
 {
+    Sampler* sampler = new NRook(1024);
+    sampler->shuffle();
 	for (int i = 0; i < lFilm->pixelCnt; i++)
-	{
-		Pixel* nPixel = &(lFilm->pixelList[i]);
-        point3D pixelPos = mapFilm2World(-nPixel->coord.x, -nPixel->coord.y);
-        shader->rayQueue.addRay(new Ray(pixelPos, normalize(pinholePos), lFilm, nPixel));
+    {
+        Pixel* nPixel = &(lFilm->pixelList[i]);
+        point3D pixelPos = mapFilm2World(nPixel->coord.x, nPixel->coord.y);
+        shader->rayQueue.addRay(new Ray(pixelPos, normalize(pinholePos-pixelPos), lFilm, nPixel));
 	}
 
 	shader->exposure();

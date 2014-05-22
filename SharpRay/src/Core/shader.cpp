@@ -13,10 +13,13 @@ void Shader::exposure()
     for (int i = 0; i < n; i++)
     {
         auto ray = rayArray[i];
+
+        if (i % 100==0)
+            printf("%d\n",i);
         if (ray->trace())
         {
             ray->shadeInfo.firstHitEntity->material->shade(ray);
-            ray->parent.orgPixel->color = ray->shadeInfo.Lo;
+            ray->parent.orgPixel->color += ray->shadeInfo.Lo;
         }
     }
 }

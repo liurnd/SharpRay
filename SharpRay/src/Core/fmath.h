@@ -15,12 +15,12 @@ typedef glm::vec3 normal3D;
 struct CoordSystem
 {
     normal3D u, v, w;
-    CoordSystem(const normal3D& ww):w(ww)
+    CoordSystem(const normal3D& ww, const normal3D& vv):w(ww)
     {
-        normal3D tx(1,0,0);
-        if (w.y < floatMin && w.z < floatMin)
-            tx = normal3D(0,1,0);
-        u = normalize(cross(tx,w));
+        normal3D cv = vv;
+        if (dot(ww,vv)< 0.01f)
+            cv = (vv.x > 0.1f)?normal3D(0,1,0):normal3D(1,0,0);
+        u = normalize(cross(cv,w));
         v = cross(w,u);
     }
 

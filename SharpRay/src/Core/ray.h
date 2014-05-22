@@ -22,7 +22,7 @@ struct Ray
 {
 	point3D origin;
 	normal3D direction;
-	Film* currentFilm;
+    Film* currentFilm;
 	union{
 		Pixel* orgPixel;
 		Ray* orgRay;
@@ -63,7 +63,7 @@ struct Ray
         direction(d),
         currentFilm(p->currentFilm){
 		parent.orgRay = p;
-		rayLevel = p->rayLevel + 1;
+        rayLevel = p->rayLevel + 1;
 	}
     Ray(const point3D& o, const normal3D& d) :
         origin(o),

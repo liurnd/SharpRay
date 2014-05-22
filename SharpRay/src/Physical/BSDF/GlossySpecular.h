@@ -1,9 +1,9 @@
 #pragma once
 #include <Physical/BSDF/bsdf.h>
-class GlossySpecular : BSDF
+class GlossySpecular : public BSDF
 {
 public:
-	virtual float BRDF(const ShadeInfo& si, const vector3D& cameraVector, const vector3D& lightVector) = 0;
-	virtual float BTDF(const ShadeInfo& si, const vector3D& cameraVector, const vector3D& lightVector){ return 0; }
+    ColorFloat exp;
+    ColorFloat sample_BRDF(const normal3D& sampleIn,  const ShadeInfo& si, const vector3D& wo, normal3D& sampleOut, float& pdf);
+    ColorFloat BRDF(const ShadeInfo& si, const vector3D& wo, const vector3D& wi);
 };
-
