@@ -6,9 +6,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->actionOpen,SIGNAL(triggered()),this,SLOT(doOpenFile()));
+
     gamma = 1;
     ISO = 200;
+
+    maxISO = 12800;
+    isoLogBase = 1.2f;
+    isoFactor = maxISO / pow(isoLogBase, ui->ISOValueSlider->maximum());
+
+    ui->ISOValueSlider->setValue(ISO2level(ISO));
+    ui->gammaFactorSlider->setValue(gamma*100);
+    ui->ISOValue->setText(QString("%1").arg(ISO));
+    ui->gammaFactor->setText(QString("%1").arg(gamma));
+
     displayGround = new QLabel();
     displayGround->show();
 
@@ -16,11 +26,31 @@ MainWindow::MainWindow(QWidget *parent) :
 
     pixelList = NULL;
     image = NULL;
+
+    connect(ui->actionOpen,SIGNAL(triggered()),this,SLOT(doOpenFile()));
+    connect(ui->ISOValueSlider, SIGNAL(valueChanged(int)),this,SLOT(changeParam()));
+    connect(ui->gammaFactorSlider,SIGNAL(valueChanged(int)),this,SLOT(changeParam()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+float MainWindow::level2ISO(int l)
+{
+    return isoFactor * pow(isoLogBase, l);
+}
+
+void MainWindow::changeParam()
+{
+    ISO = level2ISO(ui->ISOValueSlider->value());
+    gamma = static_cast<float>(ui->gammaFactorSlider->value()) / 100;
+
+    updateImage();
+
+    ui->ISOValue->setText(QString("%1").arg(ISO));
+    ui->gammaFactor->setText(QString("%1").arg(gamma));
 }
 
 void MainWindow::doOpenFile()
@@ -30,10 +60,14 @@ void MainWindow::doOpenFile()
                                                     QString(),
                                                     tr("HDR File (*.hdr)"));
     FILE* fin = fopen(fileName.toStdString().c_str(), "rb");
+    if (fin == NULL)
+        return ;
+
     fread(&imgWidth,sizeof(imgWidth), 1, fin);
     fread(&imgHeight,sizeof(imgHeight), 1, fin);
     if (pixelList != NULL) delete [] pixelList;
     pixelList = new HDRPixel[imgWidth*imgHeight];
+    pixelCnt = 0;
     while(1)
     {
         int cnt = fread(pixelList,sizeof(HDRPixel), imgWidth*imgHeight, fin);

@@ -45,14 +45,17 @@ private:
     QLabel* displayGround;
     RGBHistogram* hist;
 
+    float isoLogBase, maxISO, isoFactor;  //ISO = isoFactor * isoLogBase ^ level
+    //isoFactor = maxISO / isoLogBase ^ maxLevel
+
     float ISO, gamma;
 
-    float ISO2level(float);
-    float level2ISO(float);
+    int ISO2level(float iso){return (int)(log(iso / isoFactor) / log(isoLogBase));}
+    float level2ISO(int);
 public slots:
     void doOpenFile();
     void updateImage();
-    void changeParam(){}
+    void changeParam();
 };
 
 
