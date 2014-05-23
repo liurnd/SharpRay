@@ -12,8 +12,7 @@ class Material
 public:
 	float ka, kd;
     RColor color;
-	BSDF* bsdf;
-    Sampler* sampler;
+    BSDF* bsdf;
 
     static RayLevelType traceLevelLimit;
     static RayLevelType numAreaLightSample;

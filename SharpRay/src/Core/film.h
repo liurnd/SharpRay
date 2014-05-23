@@ -25,7 +25,7 @@ public:
 	inline Pixel* operator()(int i, int j){ return pixelList + i + filmHeight*j; }
 
 	void dumpToHDRFile(const char*);
-	Film(int w, int h, float ps);
+    Film(int w, int h, float filmSize);
 	~Film();
 };
 #endif

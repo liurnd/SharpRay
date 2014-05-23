@@ -12,7 +12,7 @@ bool BallLight::CalcSample(const point3D& targetPoint, const normal3D& squareSam
     float cos_theta = cos(squareSample.x*2*pi);
     float sin_rho = sin(squareSample.y*2*pi);
     float cos_rho = cos(squareSample.y*2*pi);
-    vector3D sampleVector(sin_theta, cos_theta * sin_rho, cos_theta * cos_rho);
+    vector3D sampleVector(sin_theta * cos_rho, sin_theta * sin_rho,cos_theta);
     samplePoint = position + sampleVector*radius;
     vector3D lightVector = targetPoint - samplePoint;
     float cosN = dot(lightVector, sampleVector)/glm::length(lightVector);

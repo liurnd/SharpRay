@@ -5,8 +5,8 @@ NRook::NRook(int num) :Sampler(num)
 {
 	for (int i = 0; i < num; i++)
 	{
-		sampleList[i].x = static_cast<float>(i) / numSample;
-		sampleList[i].y = static_cast<float>(i) / numSample;
+        sampleList[i].x = static_cast<float>(i) / numSample;
+        sampleList[i].y = static_cast<float>(i) / numSample;
         sampleList[i].z = 0;
 	}
 }

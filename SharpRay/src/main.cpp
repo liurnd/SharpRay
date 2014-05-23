@@ -4,94 +4,83 @@
 #include <Camera/camera.h>
 #include <Physical/Material.h>
 #include <Light/Light.h>
-#include <Physical/BSDF/BSDF.h>
+#include <Physical/BSDF/bsdf.h>
 #include <Light/arealight.h>
 #include <Sampler/Sampler.h>
+#include <ctime>
+
+void setupWorld()
+{
+    Material* mi = new Mirror();
+    mi->kd=1.0f;
+
+    Material* matt1 = new Material();
+    matt1->kd = 0.6f;
+    matt1->color = RColor(1, 1, 1);
+    auto b = new GlossySpecular();
+    b->exp = 2;
+    matt1->bsdf = b;
+    matt1->ka = 0.6f;
+
+    Material* matt2 = new Material();
+    matt2->kd = 0.6f;
+    matt2->color = RColor(1, 1, 1);
+    b = new GlossySpecular();
+    b->exp = 4;
+    matt2->bsdf = b;
+    matt2->ka = 0.6f;
+
+    Material* matt3 = new Material();
+    matt3->kd = 0.6f;
+    matt3->color = RColor(1, 0, 0);
+    b = new GlossySpecular();
+    b->exp = 100;
+    matt3->bsdf = b;
+    matt3->ka = 0.6f;
+
+    Material* matt4 = new Material();
+    matt4->kd = 0.2f;
+    matt4->color = RColor(1, 1, 1);
+    matt4->bsdf = new Lambertian();
+    matt4->ka = 0.6f;
+
+    Entity* s = new Sphere(point3D(3, 0, 0),1.f);
+    s->material = matt1;
+    World::currentWorld->entityList.push_back(s);
+
+    s = new Sphere(point3D(1, 0, 0),1.f);
+    s->material = mi;
+    World::currentWorld->entityList.push_back(s);
+
+    s = new Sphere(point3D(-1, 0, 0),1.f);
+    s->material = matt2;
+    World::currentWorld->entityList.push_back(s);
+
+    s = new Sphere(point3D(-3, 0, 0),1.f);
+    s->material = matt3;
+    World::currentWorld->entityList.push_back(s);
+
+    s = new Plane(vector3D(0, 0, 1), point3D(0, 0, -1));
+    s->material = matt4;
+    World::currentWorld->entityList.push_back(s);
+
+
+    BallLight* bl = new BallLight(point3D(0.f,5.f,5.f),3.f);
+    bl->color = RColor(1.f,1.f,1.f);
+    bl->ls = 0.2f;
+    World::currentWorld->areaLightList.push_back(bl);
+}
+
 int main()
 {
-    Film film(640, 480, 0.001f);
+    srand(time(NULL));
+    Film film(180, 120, 3.6e-2f);
 	World::currentWorld = new World();
 
-    Mirror mi;
-    mi.kd=1.0f;
-    Material matt;
-    matt.sampler = new NRook(10240);
-    matt.sampler->shuffle();
-    matt.kd = 0.6f;
-    matt.color = RColor(1, 1, 1);
-    matt.bsdf = new GlossySpecular();
-    matt.ka = 0.1f;
+    printf("Setup world entities\n");
+    setupWorld();
 
-    Material mattRed;
-    mattRed.sampler = new NRook(10240);
-    mattRed.sampler->shuffle();
-    mattRed.kd = 0.6f;
-    mattRed.color = RColor(1, 0, 0);
-    mattRed.bsdf = new GlossySpecular();
-    mattRed.ka = 0.1f;
-
-    Material mattBlue;
-    mattBlue.sampler = new NRook(10240);
-    mattBlue.sampler->shuffle();
-    mattBlue.kd = 0.6f;
-    mattBlue.color = RColor(0, 0, 1);
-    mattBlue.bsdf = new GlossySpecular();
-    mattBlue.ka = 0.1f;
-
-
-    //Entity* s = new Sphere(point3D(0.f, 1.f, 0.f), 0.3f);
-    //s->material = &matt;
-    //World::currentWorld->entityList.push_back(s);
-
-    Entity* s = new Sphere(point3D(0, 0, 0), 0.5f);
-    s->material = &matt;
-	World::currentWorld->entityList.push_back(s);
-
-    s = new Plane(vector3D(0, 0, 1), point3D(0, 0, -2));
-    s->material = &matt;
-    World::currentWorld->entityList.push_back(s);
-
-    s = new Plane(vector3D(0, 0, -1), point3D(0, 0, 2));
-    s->material = &matt;
-    World::currentWorld->entityList.push_back(s);
-
-    s = new Plane(vector3D(0, 1, 0), point3D(0, -2, 0));
-    s->material = &mi;
-    World::currentWorld->entityList.push_back(s);
-
-    s = new Plane(vector3D(-1, 0, 0), point3D(2, 0, 0));
-    s->material = &mattRed;
-    World::currentWorld->entityList.push_back(s);
-
-
-    s = new Plane(vector3D(1, 0, 0), point3D(-2, 0, 0));
-    s->material = &mattBlue;
-    World::currentWorld->entityList.push_back(s);
-
-/*
-    spotLight sp;
-	sp.ls = .5f;
-	sp.position = vector3D(0, -1, 0);
-	sp.color = RColor(0.f, 0.f, 1.f);
-	World::currentWorld->lightList.push_back(&sp);
-    spotLight sp2;
-    sp2.ls = 2.f;
-	sp2.position = vector3D(2.f, 2.f, 2.f);
-	sp2.color = RColor(1.f, 0.f, 0.f);
-	World::currentWorld->lightList.push_back(&sp2);
-
-	spotLight sp3;
-	sp3.ls = 2.f;
-	sp3.position = vector3D(-2.f, 2.f,2.f);
-    sp3.color = RColor(0.f, 1.f, 0.f);
-*/
-    BallLight bl(point3D(0.f,0.f,1.f),0.2f);
-    bl.color = RColor(1.f,1.f,1.f);
-    bl.ls = 2.f;
-    World::currentWorld->areaLightList.push_back(&bl);
-
-
-    pinhole c(vector3D(0,0,1),normalize(vector3D(0,-4.f,-1.f)),point3D(0,4,1),&film,0.4f);
+    pinhole c(vector3D(0,0,1),normalize(vector3D(8.f,-4.f,-2.5f)),point3D(-8.f,4.f,2.5f),&film,3.5e-2f);
 
 	c.shoot();
 	film.dumpToHDRFile("a.hdr");

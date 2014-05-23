@@ -13,8 +13,9 @@ protected:
 
 	Shader* shader;
 	Film* lFilm;
+    RayLevelType numAASample;
 public:
-	camera(const vector3D& u, const vector3D& d, const point3D& pos, Film* f);
+    camera(const vector3D& u, const vector3D& d, const point3D& pos, Film* f, RayLevelType numAntialiasSample = 8);
 
 	virtual void shoot() = 0;
 	virtual ~camera();

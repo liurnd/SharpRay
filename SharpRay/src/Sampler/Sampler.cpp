@@ -10,7 +10,6 @@ Sampler::Sampler(int num):numSample(num), type(square)
 
 void Sampler::shuffleIndex(int num)
 {
-#pragma omp critical(shuffleSampler)
     {
         for (int i = 0; i < num ;i++)
             indexList[i] = randomGen->getRandomI(0,numSample);
@@ -49,13 +48,5 @@ Sampler::~Sampler()
 normal3D Sampler::operator [](int index)
 {
     normal3D& sample = sampleList[indexList[index]];
-    switch(type)
-    {
-    case square:
-        return sample;
-    case disk:
-        return mapToDisk(sample);
-    case hemisphere:
-        return mapToHemiSphere(sample, hemisphereExp);
-    }
+    return sample;
 }

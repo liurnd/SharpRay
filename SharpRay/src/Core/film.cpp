@@ -28,9 +28,10 @@ void Film::dumpToHDRFile(const char* fName)
 	fclose(fout);
 }
 
-Film::Film(int w, int h, float ps) :filmWidth(w), filmHeight(h), pixelSize(ps), pixelCnt(w*h)
+Film::Film(int w, int h, float filmPhysicalWidth) :filmWidth(w), filmHeight(h), pixelCnt(w*h)
 {
     pixelList = new Pixel[pixelCnt];
+    pixelSize = filmPhysicalWidth / filmWidth;
 	float minX = -filmWidth / 2.0f * pixelSize, x, y = filmHeight / 2.0f *pixelSize;
 	unsigned int index = 0;
 	for (int i = 0; i < h; i++)

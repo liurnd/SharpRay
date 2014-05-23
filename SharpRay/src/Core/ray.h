@@ -7,6 +7,7 @@ class Film;
 struct Pixel;
 class Entity;
 class World;
+class Sampler;
 
 struct ShadeInfo
 {
@@ -29,6 +30,7 @@ struct Ray
 	}parent;
 
     RayLevelType rayLevel;
+    Sampler* sampler;
 
 	ShadeInfo shadeInfo;
 	
@@ -62,6 +64,7 @@ struct Ray
         origin(o),
         direction(d),
         currentFilm(p->currentFilm){
+        sampler = p->sampler;
 		parent.orgRay = p;
         rayLevel = p->rayLevel + 1;
 	}

@@ -45,7 +45,7 @@ public:
 	 * @details Cast all the ray in rayQueue.
 	 *  When tracing complete, set the color of corresponding pixel of the ray.
 	 */
-	void exposure();
+    void exposure(int numThread);
 
 	Shader();
 	~Shader();

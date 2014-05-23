@@ -63,7 +63,7 @@ public:
 
     normal3D operator [](int index);
 
-    virtual Sampler::~Sampler();
+    virtual ~Sampler();
 };
 
 

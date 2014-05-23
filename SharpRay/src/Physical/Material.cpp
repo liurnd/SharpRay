@@ -2,10 +2,10 @@
 #include <Core/world.h>
 #include <Sampler/Sampler.h>
 
-#include <Physical/BSDF/BSDF.h>
+#include <Physical/BSDF/bsdf.h>
 
-RayLevelType Material::numAreaLightSample = 8;
-RayLevelType Material::numGlobalSample = 4;
+RayLevelType Material::numAreaLightSample = 256;
+RayLevelType Material::numGlobalSample = 12;
 RayLevelType Material::traceLevelLimit = 4;
 
 Material::Material()
@@ -15,6 +15,7 @@ Material::Material()
 void Material::shade(Ray* r)
 {
     ShadeInfo &si = r->shadeInfo;
+    Sampler* sampler = r->sampler;
 
 	si.firstHitPoint = r->origin + r->direction*si.firstHitT;
 	si.hitNormal = si.firstHitEntity->normalAt(si.firstHitPoint);
@@ -38,7 +39,7 @@ void Material::shade(Ray* r)
         {
             point3D samplePoint;
             ColorFloat pdf;
-            if (!(*light)->CalcSample(r->shadeInfo.firstHitPoint, sampler->sampleList[i], samplePoint, Li,pdf))
+            if (!(*light)->CalcSample(r->shadeInfo.firstHitPoint, (*sampler)[i], samplePoint, Li,pdf))
                     continue;
             lightVector = r->shadeInfo.firstHitPoint - samplePoint;
             CoordFloat distance = glm::length(lightVector);
@@ -52,22 +53,23 @@ void Material::shade(Ray* r)
 
     //Indirect light
 
-    if (r->rayLevel < traceLevelLimit && ka > 0)
+
+    sampler->shuffleIndex(numGlobalSample+1);
+    if ((*sampler)[numGlobalSample].x < ka && r->rayLevel < traceLevelLimit && ka > 0)
     {
-        sampler->shuffleIndex(numGlobalSample);
         RColor tmpC(0);
         for (int i = 0; i < numGlobalSample; i++)
         {
             normal3D sampleOut;ColorFloat pdf;
-            ColorFloat f = bsdf->sample_BRDF(sampler->sampleList[i],si,r->direction,sampleOut,pdf);
+            ColorFloat f = bsdf->sample_BRDF((*sampler)[i],si,r->direction,sampleOut,pdf);
             Ray *refRay = new Ray(si.firstHitPoint,sampleOut,r);
             if (refRay->trace())
             {
                 refRay->shadeInfo.firstHitEntity->material->shade(refRay);
                 ColorFloat cosin = dot(sampleOut, si.hitNormal);
-
                 tmpC += refRay->shadeInfo.Lo * (ka * f * cosin/ pdf);
             }
+
             delete refRay;
         }
 
