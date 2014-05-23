@@ -26,6 +26,7 @@ bool BallLight::CalcRad(Ray *r, RColor &colorOut)
     point3D lightPoint = r->origin + r->direction*t;
     normal3D pointNormal = lightPoint - position;
     colorOut = color* (ls * -dot(pointNormal, r->direction));
+    return true;
 }
 
 bool BallLight::CalcSample(const point3D& targetPoint, const normal3D& squareSample, point3D& samplePoint, RColor& Li,float& pdf)
