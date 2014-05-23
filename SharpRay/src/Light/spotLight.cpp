@@ -3,7 +3,7 @@
 #include <Core/ray.h>
 
 bool spotLight::Lo(Ray* r, RColor& colorOut, vector3D& lightVector)  {
-	lightVector = r->shadeInfo.firstHitPoint - position;
+	lightVector = r->shadeInfo.hitPoint - position;
 	float cosin = dot(lightVector, -r->shadeInfo.hitNormal);
 	if (cosin < 0)
 		return false;

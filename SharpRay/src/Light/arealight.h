@@ -25,6 +25,8 @@ public:
      * @return             Whether this sample point is face to the target point
      */
     virtual bool CalcSample(const point3D& targetSample, const normal3D& squareSample, point3D& samplePoint, RColor& Li,float& pdf) = 0;
+
+    virtual bool CalcRad(Ray* ray, RColor& colorOut) = 0;
 };
 
 

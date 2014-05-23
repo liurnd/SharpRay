@@ -14,7 +14,7 @@ public:
 	std::list<Entity*> entityList;
 	std::list<Light*> lightList;
     std::list<AreaLight*> areaLightList;
-	static World* currentWorld;
+
 	World();
 	~World();
 };

@@ -16,7 +16,7 @@ void Shader::exposure(int numThread)
         samplerList[i] = new NRook(10240);
     omp_set_num_threads(numThread);
 
-#pragma omp parallel for
+#pragma omp parallel for schedule(dynamic)
     for (int i = 0; i < n; i++)
     {
         auto ray = rayArray[i];

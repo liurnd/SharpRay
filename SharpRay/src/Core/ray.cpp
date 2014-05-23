@@ -4,7 +4,7 @@
 
 bool Ray::hasHit() const
 {
-	for (auto i = World::currentWorld->entityList.begin(); i != World::currentWorld->entityList.end(); i++)
+    for (auto i = currentWorld->entityList.begin(); i != currentWorld->entityList.end(); i++)
 	{
         CoordFloat t;
         if (!(*i)->firstHit(this,t))
@@ -18,7 +18,7 @@ bool Ray::hasHit() const
 bool Ray::trace()
 {
     shadeInfo.firstHitEntity= NULL;
-	for (auto i = World::currentWorld->entityList.begin(); i != World::currentWorld->entityList.end(); i++)
+    for (auto i = currentWorld->entityList.begin(); i != currentWorld->entityList.end(); i++)
     {
         CoordFloat t;
         if (!(*i)->firstHit(this,t))

@@ -13,7 +13,7 @@ struct ShadeInfo
 {
 	float transferFactor;
 	float firstHitT;
-	point3D firstHitPoint;
+    point3D hitPoint;
 	normal3D hitNormal;
 	Entity* firstHitEntity;
 	RColor Lo;
@@ -24,6 +24,7 @@ struct Ray
 	point3D origin;
 	normal3D direction;
     Film* currentFilm;
+    World* currentWorld;
 	union{
 		Pixel* orgPixel;
 		Ray* orgRay;

@@ -16,13 +16,14 @@ void Material::shade(Ray* r)
 {
     ShadeInfo &si = r->shadeInfo;
     Sampler* sampler = r->sampler;
+    World* currentWorld = r->currentWorld;
 
-	si.firstHitPoint = r->origin + r->direction*si.firstHitT;
-	si.hitNormal = si.firstHitEntity->normalAt(si.firstHitPoint);
+    si.hitPoint = r->origin + r->direction*si.firstHitT;
+    si.hitNormal = si.firstHitEntity->normalAt(si.hitPoint);
 
 	si.Lo = RColor(0);
 	//Direct light
-	for (auto i = World::currentWorld->lightList.begin(); i != World::currentWorld->lightList.end(); i++)
+    for (auto i = currentWorld->lightList.begin(); i != currentWorld->lightList.end(); i++)
 	{
 		RColor Li; vector3D lightVector;
         if ((*i)->Lo(r, Li, lightVector))
@@ -30,7 +31,7 @@ void Material::shade(Ray* r)
 	}
 
     //Area Light
-    for (auto light = World::currentWorld->areaLightList.begin();light != World::currentWorld->areaLightList.end();light++)
+    for (auto light = currentWorld->areaLightList.begin();light != currentWorld->areaLightList.end();light++)
     {
         RColor Li; RColor tmpLo;
         vector3D lightVector;// From light sample point to hit point
@@ -39,9 +40,9 @@ void Material::shade(Ray* r)
         {
             point3D samplePoint;
             ColorFloat pdf;
-            if (!(*light)->CalcSample(r->shadeInfo.firstHitPoint, (*sampler)[i], samplePoint, Li,pdf))
+            if (!(*light)->CalcSample(r->shadeInfo.hitPoint, (*sampler)[i], samplePoint, Li,pdf))
                     continue;
-            lightVector = r->shadeInfo.firstHitPoint - samplePoint;
+            lightVector = r->shadeInfo.hitPoint - samplePoint;
             CoordFloat distance = glm::length(lightVector);
             Ray shadowRay(samplePoint,lightVector/distance);
             shadowRay.shadeInfo.firstHitT = distance;
@@ -62,7 +63,7 @@ void Material::shade(Ray* r)
         {
             normal3D sampleOut;ColorFloat pdf;
             ColorFloat f = bsdf->sample_BRDF((*sampler)[i],si,r->direction,sampleOut,pdf);
-            Ray *refRay = new Ray(si.firstHitPoint,sampleOut,r);
+            Ray *refRay = new Ray(si.hitPoint,sampleOut,r);
             if (refRay->trace())
             {
                 refRay->shadeInfo.firstHitEntity->material->shade(refRay);

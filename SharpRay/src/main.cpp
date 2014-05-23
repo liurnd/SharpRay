@@ -9,7 +9,7 @@
 #include <Sampler/Sampler.h>
 #include <ctime>
 
-void setupWorld()
+void setupWorld(World* currentWorld)
 {
     Material* mi = new Mirror();
     mi->kd=1.0f;
@@ -46,39 +46,39 @@ void setupWorld()
 
     Entity* s = new Sphere(point3D(3, 0, 0),1.f);
     s->material = matt1;
-    World::currentWorld->entityList.push_back(s);
+    currentWorld->entityList.push_back(s);
 
     s = new Sphere(point3D(1, 0, 0),1.f);
     s->material = mi;
-    World::currentWorld->entityList.push_back(s);
+    currentWorld->entityList.push_back(s);
 
     s = new Sphere(point3D(-1, 0, 0),1.f);
     s->material = matt2;
-    World::currentWorld->entityList.push_back(s);
+    currentWorld->entityList.push_back(s);
 
     s = new Sphere(point3D(-3, 0, 0),1.f);
     s->material = matt3;
-    World::currentWorld->entityList.push_back(s);
+    currentWorld->entityList.push_back(s);
 
     s = new Plane(vector3D(0, 0, 1), point3D(0, 0, -1));
     s->material = matt4;
-    World::currentWorld->entityList.push_back(s);
+    currentWorld->entityList.push_back(s);
 
 
     BallLight* bl = new BallLight(point3D(0.f,5.f,5.f),3.f);
     bl->color = RColor(1.f,1.f,1.f);
     bl->ls = 0.2f;
-    World::currentWorld->areaLightList.push_back(bl);
+    currentWorld->areaLightList.push_back(bl);
 }
 
 int main()
 {
     srand(time(NULL));
-    Film film(180, 120, 3.6e-2f);
-	World::currentWorld = new World();
+    Film film(360, 240, 3.6e-2f);
+    World* currentWorld = new World();
 
     printf("Setup world entities\n");
-    setupWorld();
+    setupWorld(currentWorld);
 
     pinhole c(vector3D(0,0,1),normalize(vector3D(8.f,-4.f,-2.5f)),point3D(-8.f,4.f,2.5f),&film,3.5e-2f);
 

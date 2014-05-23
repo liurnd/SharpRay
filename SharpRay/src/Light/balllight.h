@@ -17,6 +17,7 @@ public:
     ColorFloat ls;
     BallLight(const point3D& pos, const CoordFloat radius);
     bool CalcSample(const point3D& targetSample, const normal3D& squareSample, point3D& samplePoint, RColor& Li,float& pdf);
+    bool CalcRad(Ray *ray, RColor &colorOut);
 };
 
 #endif // BALLLIGHT_H

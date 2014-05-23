@@ -6,6 +6,28 @@ BallLight::BallLight(const point3D &pos, const CoordFloat r)
 {
 }
 
+bool BallLight::CalcRad(Ray *r, RColor &colorOut)
+{
+    point3D nPos = position - r->origin;
+    float b = -2*dot(r->direction, nPos);
+    float a = dot(r->direction, r->direction);
+    float c = dot(nPos, nPos)-radius*radius;
+    float b2ac = b*b - 4 * a*c;
+    if (b2ac < 0.0f)
+        return false;
+    float t = (-b - sqrt(b2ac)) / (2 * a);
+    if (t <= 0.0f)
+    {
+        t = (-b + sqrt(b2ac)) / (2 * a);
+        if (t <= 0.0f)
+            return false;
+    }
+    r->shadeInfo.firstHitT = t;
+    point3D lightPoint = r->origin + r->direction*t;
+    normal3D pointNormal = lightPoint - position;
+    colorOut = color* (ls * -dot(pointNormal, r->direction));
+}
+
 bool BallLight::CalcSample(const point3D& targetPoint, const normal3D& squareSample, point3D& samplePoint, RColor& Li,float& pdf)
 {
     float sin_theta = sin(squareSample.x*2*pi);
