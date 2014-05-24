@@ -1,15 +1,16 @@
 #include <Physical/Material.h>
 #include <Core/world.h>
 #include <Sampler/Sampler.h>
-
+#include <Texture/texture.h>
 #include <Physical/BSDF/bsdf.h>
 
-RayLevelType Material::numAreaLightSample = 256;
-RayLevelType Material::numGlobalSample = 12;
+RayLevelType Material::numAreaLightSample = 4;
+RayLevelType Material::numGlobalSample = 2;
 RayLevelType Material::traceLevelLimit = 4;
 
 Material::Material()
 {
+    texture = NULL;
 }
 
 void Material::shade(Ray* r)
@@ -31,7 +32,7 @@ void Material::shade(Ray* r)
 	}
 
     //Area Light
-    for (auto light = currentWorld->areaLightList.begin();light != currentWorld->areaLightList.end();light++)
+    /*for (auto light = currentWorld->areaLightList.begin();light != currentWorld->areaLightList.end();light++)
     {
         RColor Li; RColor tmpLo;
         vector3D lightVector;// From light sample point to hit point
@@ -44,7 +45,7 @@ void Material::shade(Ray* r)
                     continue;
             lightVector = r->shadeInfo.hitPoint - samplePoint;
             CoordFloat distance = glm::length(lightVector);
-            Ray shadowRay(samplePoint,lightVector/distance);
+            Ray shadowRay(samplePoint,lightVector/distance,r);
             shadowRay.shadeInfo.firstHitT = distance;
             if (!shadowRay.hasHit())
                 tmpLo += Li*((kd * bsdf->BRDF(si, r->direction, lightVector))*(-dot(si.hitNormal,lightVector)/distance)/ pdf);
@@ -75,7 +76,14 @@ void Material::shade(Ray* r)
         }
 
         si.Lo += (tmpC / static_cast<float>(numGlobalSample));
+    }*/
+    RColor tColor = color;
+
+    if (texture!=NULL)
+    {
+        point3D texturePoint;
+        if (r->shadeInfo.firstHitEntity->map2texture(r->shadeInfo.hitPoint,texturePoint))
+            tColor = (*texture)(texturePoint);
     }
-	//Lambertian
-    si.Lo = si.Lo * color;
+    si.Lo = si.Lo * tColor;
 }

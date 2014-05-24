@@ -1,7 +1,7 @@
 #include "camera.h"
 #include <Core/ray.h>
 
-void pinhole::shoot()
+void pinhole::shoot(World *world)
 {
     Sampler* sampler = new NRook(10240);
     sampler->shuffle();
@@ -13,6 +13,7 @@ void pinhole::shoot()
         {
             point3D pixelPos = mapFilm2World(nPixel->coord.x+((*sampler)[j].x-0.5f)*lFilm->pixelSize, nPixel->coord.y+((*sampler)[j].y-0.5f)*lFilm->pixelSize);
             Ray *ray = new Ray(pixelPos, normalize(pinholePos-pixelPos), lFilm, nPixel);
+            ray->currentWorld = world;
             shader->rayQueue.addRay(ray);
         }
     }

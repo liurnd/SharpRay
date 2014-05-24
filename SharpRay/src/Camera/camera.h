@@ -15,9 +15,9 @@ protected:
 	Film* lFilm;
     RayLevelType numAASample;
 public:
-    camera(const vector3D& u, const vector3D& d, const point3D& pos, Film* f, RayLevelType numAntialiasSample = 8);
+    camera(const vector3D& u, const vector3D& d, const point3D& pos, Film* f, RayLevelType numAntialiasSample = 1);
 
-	virtual void shoot() = 0;
+    virtual void shoot(World*) = 0;
 	virtual ~camera();
 };
 
@@ -28,7 +28,7 @@ public:
 	pinhole(vector3D up, vector3D d, const point3D& pos, Film* f, float focalLength) :camera(up, d, pos, f){
         pinholePos = position + direction*focalLength;
 	}
-	void shoot();
+    void shoot(World* world);
 	~pinhole(){}
 };
 
@@ -38,6 +38,6 @@ public:
 	float focalLength;
 	float apertureDiameter;
 	lenCamera();
-	void shoot();
+    void shoot(World* world);
 	~lenCamera(){}
 };

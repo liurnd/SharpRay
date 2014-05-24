@@ -63,14 +63,11 @@ struct Ray
 	}
     Ray(const point3D& o, const normal3D& d, Ray* p) :
         origin(o),
-        direction(d),
+        direction(d),currentWorld(p->currentWorld),
         currentFilm(p->currentFilm){
         sampler = p->sampler;
 		parent.orgRay = p;
         rayLevel = p->rayLevel + 1;
-	}
-    Ray(const point3D& o, const normal3D& d) :
-        origin(o),
-        direction(d){ }
+    }
 };
 #endif

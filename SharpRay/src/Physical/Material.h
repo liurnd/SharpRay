@@ -7,12 +7,14 @@ struct Ray;
 struct ShadeInfo;
 class BSDF;
 class Sampler;
+class Texture;
 class Material
 {
 public:
 	float ka, kd;
     RColor color;
     BSDF* bsdf;
+    Texture* texture;
 
     static RayLevelType traceLevelLimit;
     static RayLevelType numAreaLightSample;

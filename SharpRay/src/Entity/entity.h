@@ -31,6 +31,8 @@ public:
 	 * @return t where t*r->direction+r->origin the first point the giving ray can hit;
 	 */
     virtual bool firstHit(const Ray*, CoordFloat& t)=0;
+
+    virtual bool map2texture(const point3D& point, point3D& texturePoint){return false;}
 	virtual ~Entity();
 };
 

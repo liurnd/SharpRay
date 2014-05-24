@@ -7,6 +7,7 @@
 #include <Physical/BSDF/bsdf.h>
 #include <Light/arealight.h>
 #include <Sampler/Sampler.h>
+#include <Texture/texture.h>
 #include <ctime>
 
 void setupWorld(World* currentWorld)
@@ -31,7 +32,8 @@ void setupWorld(World* currentWorld)
     matt2->ka = 0.6f;
 
     Material* matt3 = new Material();
-    matt3->kd = 0.6f;
+    matt3->kd = 1.f;
+    matt3->texture = new Texture("tmp.jpg");
     matt3->color = RColor(1, 0, 0);
     b = new GlossySpecular();
     b->exp = 100;
@@ -49,14 +51,14 @@ void setupWorld(World* currentWorld)
     currentWorld->entityList.push_back(s);
 
     s = new Sphere(point3D(1, 0, 0),1.f);
-    s->material = mi;
-    currentWorld->entityList.push_back(s);
-
-    s = new Sphere(point3D(-1, 0, 0),1.f);
     s->material = matt2;
     currentWorld->entityList.push_back(s);
 
-    s = new Sphere(point3D(-3, 0, 0),1.f);
+    s = new Sphere(point3D(-1, 0, 0),1.f);
+    s->material = mi;
+    currentWorld->entityList.push_back(s);
+
+    Sphere* s = new Sphere(point3D(-3, 0, 0),1.f);
     s->material = matt3;
     currentWorld->entityList.push_back(s);
 
@@ -69,6 +71,13 @@ void setupWorld(World* currentWorld)
     bl->color = RColor(1.f,1.f,1.f);
     bl->ls = 0.2f;
     currentWorld->areaLightList.push_back(bl);
+
+    spotLight* p = new spotLight();
+    p->position = point3D(0.f,5.f,5.f);
+    p->ls = 0.2f;
+    p->color = RColor(1.f,1.f,1.f);
+    currentWorld->lightList.push_back(p);
+
 }
 
 int main()
@@ -82,7 +91,7 @@ int main()
 
     pinhole c(vector3D(0,0,1),normalize(vector3D(8.f,-4.f,-2.5f)),point3D(-8.f,4.f,2.5f),&film,3.5e-2f);
 
-	c.shoot();
+    c.shoot(currentWorld);
 	film.dumpToHDRFile("a.hdr");
 	return 0;
 }

@@ -7,11 +7,13 @@ typedef glm::vec3 vector3D;
 typedef glm::vec3 point3D;
 typedef glm::vec3 normal3D;
 
-#define pi 3.1415f
-#define dot glm::dot
-#define cross glm::cross
-#define normalize glm::normalize
+#define PI 3.1415f
 #define floatMin 0.0000001f
+
+inline CoordFloat dot(const vector3D &x, const vector3D &y){return glm::dot(x,y);}
+inline vector3D cross(const vector3D &x, const vector3D &y){return glm::cross(x,y);}
+inline normal3D normalize(const vector3D &x){return glm::normalize(x);}
+
 struct CoordSystem
 {
     normal3D u, v, w;
