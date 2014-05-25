@@ -7,6 +7,7 @@
 #include <Light/arealight.h>
 struct Ray;
 class Entity;
+struct Config;
 
 class World
 {
@@ -14,6 +15,7 @@ public:
 	std::list<Entity*> entityList;
 	std::list<Light*> lightList;
     std::list<AreaLight*> areaLightList;
+    Config* globalConfig;
 
 	World();
 	~World();
