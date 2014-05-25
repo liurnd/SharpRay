@@ -32,25 +32,34 @@ void Material::shade(Ray* r)
 	}
 
     //Area Light
-    /*for (auto light = currentWorld->areaLightList.begin();light != currentWorld->areaLightList.end();light++)
+    for (auto light = currentWorld->areaLightList.begin();light != currentWorld->areaLightList.end();light++)
     {
         RColor Li; RColor tmpLo;
-        vector3D lightVector;// From light sample point to hit point
+
         sampler->shuffleIndex(numAreaLightSample);
         for (int i = 0; i < numAreaLightSample; i++)
         {
+            vector3D lightVector;   // From light sample point to hit point
             point3D samplePoint;
             ColorFloat pdf;
             if (!(*light)->CalcSample(r->shadeInfo.hitPoint, (*sampler)[i], samplePoint, Li,pdf))
                     continue;
             lightVector = r->shadeInfo.hitPoint - samplePoint;
-            CoordFloat distance = glm::length(lightVector);
-            Ray shadowRay(samplePoint,lightVector/distance,r);
-            shadowRay.shadeInfo.firstHitT = distance;
+            normal3D nLightVector = normalize(lightVector);
+            Ray shadowRay(samplePoint,nLightVector,r);
+            shadowRay.shadeInfo.firstHitT = glm::length(lightVector);
             if (!shadowRay.hasHit())
-                tmpLo += Li*((kd * bsdf->BRDF(si, r->direction, lightVector))*(-dot(si.hitNormal,lightVector)/distance)/ pdf);
+            {
+                float cosin = -dot(si.hitNormal,nLightVector);
+                if (cosin<0)
+                    continue;
+                float bf = bsdf->BRDF(si, r->direction, nLightVector);
+                tmpLo += Li*(kd * bf * cosin / pdf);
+                assert(tmpLo.r >=0);
+            }
         }
         si.Lo += (tmpLo/static_cast<float>(numAreaLightSample));
+
     }
 
     //Indirect light
@@ -70,13 +79,14 @@ void Material::shade(Ray* r)
                 refRay->shadeInfo.firstHitEntity->material->shade(refRay);
                 ColorFloat cosin = dot(sampleOut, si.hitNormal);
                 tmpC += refRay->shadeInfo.Lo * (ka * f * cosin/ pdf);
+                assert(tmpC.r >= 0);
             }
 
             delete refRay;
         }
 
         si.Lo += (tmpC / static_cast<float>(numGlobalSample));
-    }*/
+    }
     RColor tColor = color;
 
     if (texture!=NULL)
@@ -85,5 +95,7 @@ void Material::shade(Ray* r)
         if (r->shadeInfo.firstHitEntity->map2texture(r->shadeInfo.hitPoint,texturePoint))
             tColor = (*texture)(texturePoint);
     }
+
+    assert(si.Lo.r >= 0);
     si.Lo = si.Lo * tColor;
 }
