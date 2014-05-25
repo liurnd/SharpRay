@@ -8,6 +8,7 @@
 #include <Light/arealight.h>
 #include <Sampler/Sampler.h>
 #include <Texture/texture.h>
+#include <Core/config.h>
 #include <ctime>
 
 void setupWorld(World* currentWorld)
@@ -58,7 +59,7 @@ void setupWorld(World* currentWorld)
     s->material = mi;
     currentWorld->entityList.push_back(s);
 
-    Sphere* s = new Sphere(point3D(-3, 0, 0),1.f);
+    s = new Sphere(point3D(-3, 0, 0),1.f);
     s->material = matt3;
     currentWorld->entityList.push_back(s);
 
@@ -80,11 +81,12 @@ void setupWorld(World* currentWorld)
 
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     srand(time(NULL));
     Film film(360, 240, 3.6e-2f);
     World* currentWorld = new World();
+    currentWorld->globalConfig = new Config(argc, argv);
 
     printf("Setup world entities\n");
     setupWorld(currentWorld);

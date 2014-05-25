@@ -3,10 +3,7 @@
 #include <Sampler/Sampler.h>
 #include <Texture/texture.h>
 #include <Physical/BSDF/bsdf.h>
-
-RayLevelType Material::numAreaLightSample = 4;
-RayLevelType Material::numGlobalSample = 2;
-RayLevelType Material::traceLevelLimit = 4;
+#include <Core/config.h>
 
 Material::Material()
 {
@@ -18,6 +15,7 @@ void Material::shade(Ray* r)
     ShadeInfo &si = r->shadeInfo;
     Sampler* sampler = r->sampler;
     World* currentWorld = r->currentWorld;
+    Config* config = currentWorld->globalConfig;
 
     si.hitPoint = r->origin + r->direction*si.firstHitT;
     si.hitNormal = si.firstHitEntity->normalAt(si.hitPoint);
@@ -36,8 +34,8 @@ void Material::shade(Ray* r)
     {
         RColor Li; RColor tmpLo;
 
-        sampler->shuffleIndex(numAreaLightSample);
-        for (int i = 0; i < numAreaLightSample; i++)
+        sampler->shuffleIndex(config->numAreaLightSample);
+        for (int i = 0; i < config->numAreaLightSample; i++)
         {
             vector3D lightVector;   // From light sample point to hit point
             point3D samplePoint;
@@ -58,18 +56,18 @@ void Material::shade(Ray* r)
                 assert(tmpLo.r >=0);
             }
         }
-        si.Lo += (tmpLo/static_cast<float>(numAreaLightSample));
+        si.Lo += (tmpLo/static_cast<float>(config->numAreaLightSample));
 
     }
 
     //Indirect light
 
 
-    sampler->shuffleIndex(numGlobalSample+1);
-    if ((*sampler)[numGlobalSample].x < ka && r->rayLevel < traceLevelLimit && ka > 0)
+    sampler->shuffleIndex(config->numPathTraceSample +1);
+    if ((*sampler)[config->numPathTraceSample].x < ka && r->rayLevel < config->traceLevelLimit && ka > 0)
     {
         RColor tmpC(0);
-        for (int i = 0; i < numGlobalSample; i++)
+        for (int i = 0; i < config->numPathTraceSample; i++)
         {
             normal3D sampleOut;ColorFloat pdf;
             ColorFloat f = bsdf->sample_BRDF((*sampler)[i],si,r->direction,sampleOut,pdf);
@@ -85,7 +83,7 @@ void Material::shade(Ray* r)
             delete refRay;
         }
 
-        si.Lo += (tmpC / static_cast<float>(numGlobalSample));
+        si.Lo += (tmpC / static_cast<float>(config->numPathTraceSample));
     }
     RColor tColor = color;
 

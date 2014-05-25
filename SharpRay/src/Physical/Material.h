@@ -16,9 +16,6 @@ public:
     BSDF* bsdf;
     Texture* texture;
 
-    static RayLevelType traceLevelLimit;
-    static RayLevelType numAreaLightSample;
-    static RayLevelType numGlobalSample;
 
     Material();
     virtual void shade(Ray* r);

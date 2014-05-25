@@ -3,6 +3,7 @@
 #include <Core/ray.h>
 #include <Entity/entity.h>
 #include <Core/world.h>
+#include <Core/config.h>
 Mirror::Mirror()
 {
 }
@@ -14,10 +15,9 @@ void Mirror::shade(Ray *r)
     si.hitPoint = r->origin + r->direction*si.firstHitT;
     si.hitNormal = si.firstHitEntity->normalAt(si.hitPoint);
     si.Lo = RColor(0);
-    if (r->rayLevel>traceLevelLimit)
+    if (r->rayLevel>currentWorld->globalConfig->traceLevelLimit)
         return;
     normal3D refD = r->direction + si.hitNormal* (-dot(si.hitNormal,r->direction)*2);
-
 
     for (auto i = currentWorld->areaLightList.begin(); i != currentWorld->areaLightList.end();i++)
     {
