@@ -16,4 +16,5 @@ endif()
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/third-party)
 
-add_executable(sharpRay ${SRC_CPP} ${SRC_H})
+add_executable(sharpRay "exec/main.cpp" ${SRC_CPP} ${SRC_H})
+add_executable(unittest_triangle "exec/unittest_triangle.cpp" ${SRC_CPP} ${SRC_H})
