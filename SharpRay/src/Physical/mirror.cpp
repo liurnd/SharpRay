@@ -3,7 +3,7 @@
 #include <Core/ray.h>
 #include <Entity/entity.h>
 #include <Core/world.h>
-#include <Core/config.h>
+#include <Util/config.h>
 Mirror::Mirror()
 {
 }

@@ -28,7 +28,7 @@ bool Ray::trace()
 			if (t < (*i)->kEpsilon)
 				continue;
 			shadeInfo.firstHitT = t;
-			shadeInfo.firstHitEntity = *i;
+            shadeInfo.firstHitEntity = *i;
 		}
 	}
 

@@ -3,7 +3,7 @@
 #include <Sampler/Sampler.h>
 #include <Texture/texture.h>
 #include <Physical/BSDF/bsdf.h>
-#include <Core/config.h>
+#include <Util/config.h>
 
 Material::Material()
 {
@@ -21,6 +21,8 @@ void Material::shade(Ray* r)
     si.hitNormal = si.firstHitEntity->normalAt(si.hitPoint);
 
 	si.Lo = RColor(0);
+    if (dot(si.hitNormal,r->direction) > 0)
+        return;
 	//Direct light
     for (auto i = currentWorld->lightList.begin(); i != currentWorld->lightList.end(); i++)
 	{
@@ -64,7 +66,7 @@ void Material::shade(Ray* r)
 
 
     sampler->shuffleIndex(config->numPathTraceSample +1);
-    if ((*sampler)[config->numPathTraceSample].x < ka && r->rayLevel < config->traceLevelLimit && ka > 0)
+    if (r->rayLevel < config->traceLevelLimit && (*sampler)[config->numPathTraceSample].x < ka && ka > 0)
     {
         RColor tmpC(0);
         for (int i = 0; i < config->numPathTraceSample; i++)
