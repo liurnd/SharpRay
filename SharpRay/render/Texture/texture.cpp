@@ -1,5 +1,4 @@
 #include "texture.h"
-#include <Texture/jpgd.h>
 RColor Texture::operator ()(const normal3D& po)
 {
     RColor tmp;
@@ -19,10 +18,4 @@ RColor Texture::operator ()(const normal3D& po)
     tmp.g = static_cast<float>(pixel->g)/255;
     tmp.b = static_cast<float>(pixel->b)/255;
     return tmp;
-}
-Texture::Texture(const char* fName)
-{
-    int d;
-    pixelList = (RGBPixel*) jpgd::decompress_jpeg_image_from_file(fName,&width,&height,&d, 3);
-    assert(d == 3);
 }

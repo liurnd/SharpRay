@@ -1,4 +1,4 @@
-#include "config.h"
+#include "configmgr.h"
 #include <Core/getopt.h>
 #include <cstdio>
 static const struct option longOpts[]=
@@ -22,26 +22,28 @@ void displayUsage()
             ");
 }
 
-Config::Config(int argc, char *argv[])
+
+
+void setConfig(int argc, char* argv[], Config* config)
 {
     char c;int longIndex;
-    numAntialiasSample = 4;
-    numAreaLightSample = 24;
-    numPathTraceSample = 2;
-    traceLevelLimit = 3;
+    config->numAntialiasSample = 4;
+    config->numAreaLightSample = 24;
+    config->numPathTraceSample = 2;
+    config->traceLevelLimit = 3;
     while((c = getopt_long(argc, argv,optString,longOpts,&longIndex))!=-1)
     {
         switch (c){
         case 'A':
-            numAntialiasSample = atoi(optarg);
+            config->numAntialiasSample = atoi(optarg);
             break;
         case 'a':
-            numAreaLightSample = atoi(optarg);
+            config->numAreaLightSample = atoi(optarg);
             break;
         case 'p':
-            numPathTraceSample = atoi(optarg);
+            config->numPathTraceSample = atoi(optarg);
         case 't':
-            traceLevelLimit = atoi(optarg);
+            config->traceLevelLimit = atoi(optarg);
         case 'h':
         case '?':
             displayUsage();
@@ -49,8 +51,8 @@ Config::Config(int argc, char *argv[])
         }
     }
     printf("SharpRay is ready to run:\nnAAS:%d, nALS:%d, nPTS:%d, td:%d\n",
-           numAntialiasSample,
-           numAreaLightSample,
-           numPathTraceSample,
-           traceLevelLimit);
+           config->numAntialiasSample,
+           config->numAreaLightSample,
+           config->numPathTraceSample,
+           config->traceLevelLimit);
 }

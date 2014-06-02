@@ -9,7 +9,6 @@ public:
     RayLevelType numAreaLightSample;
     RayLevelType numPathTraceSample;
     RayLevelType traceLevelLimit;
-    Config(int argc, char* argv[]);
 };
 
 #endif // CONFIG_H

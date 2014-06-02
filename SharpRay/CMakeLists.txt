@@ -1,7 +1,7 @@
 PROJECT(SharpRay)
 cmake_minimum_required(VERSION 2.8)
-FILE(GLOB_RECURSE SRC_CPP "src/*.cpp")
-FILE(GLOB_RECURSE SRC_H "src/*.h")
+FILE(GLOB_RECURSE RENDER_CPP "render/*.cpp")
+FILE(GLOB_RECURSE MGR_CPP "manager/*.cpp")
 
 if (MSVC)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /openmp")
@@ -14,7 +14,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     endif()
 endif()
 
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/third-party)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/manager ${CMAKE_SOURCE_DIR}/render ${CMAKE_SOURCE_DIR}/third-party)
 
-add_executable(sharpRay "exec/main.cpp" ${SRC_CPP} ${SRC_H})
-add_executable(unittest_triangle "exec/unittest_triangle.cpp" ${SRC_CPP} ${SRC_H})
+add_executable(sharpRay "test/main.cpp" ${RENDER_CPP} ${MGR_CPP})
+add_executable(unittest_triangle "test/unittest_triangle.cpp" ${RENDER_CPP} ${MGR_CPP})

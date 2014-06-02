@@ -11,6 +11,9 @@
 #include <Util/config.h>
 #include <ctime>
 #include <Util/mesh.h>
+#include <configmgr.h>
+#include <texturereader.h>
+
 vector3D vecList[] = {point3D(0,1,0),point3D(1,0,1), point3D(-1,0,1), point3D(0,-1,0)};
 void setupMesh(World* currentWorld)
 {
@@ -56,7 +59,9 @@ int main(int argc, char* argv[])
     srand(time(NULL));
     Film film(360, 240, 3.6e-2f);
     World* currentWorld = new World();
-    currentWorld->globalConfig = new Config(argc, argv);
+
+    currentWorld->globalConfig = new Config();
+    setConfig(argc,argv,currentWorld->globalConfig);
 
     printf("Setup world entities\n");
     setupMesh(currentWorld);

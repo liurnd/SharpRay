@@ -14,7 +14,7 @@ class Texture
     RGBPixel* pixelList;
 public:
     Texture(){}
-    Texture(const char* fName);
+    friend bool readTexture(const char* fName, Texture*);
     RColor operator ()(const normal3D& po);
 };
 

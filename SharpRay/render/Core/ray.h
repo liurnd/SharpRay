@@ -2,7 +2,7 @@
 #define _RAY_H_
 
 #include <Core/BaseDS.h>
-#include <Core/Color.h>
+#include <Core/color.h>
 #define OODSize 20
 class Film;
 struct Pixel;

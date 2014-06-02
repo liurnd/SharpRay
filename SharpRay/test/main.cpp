@@ -9,6 +9,8 @@
 #include <Sampler/Sampler.h>
 #include <Texture/texture.h>
 #include <Util/config.h>
+#include <configmgr.h>
+#include <texturereader.h>
 #include <ctime>
 
 void setupWorld(World* currentWorld)
@@ -34,7 +36,8 @@ void setupWorld(World* currentWorld)
 
     Material* matt3 = new Material();
     matt3->kd = 1.f;
-    matt3->texture = new Texture("tmp.jpg");
+    matt3->texture = new Texture();
+    readTexture("tmp.jpg", matt3->texture);
     matt3->color = RColor(1, 0, 0);
     b = new GlossySpecular();
     b->exp = 100;
@@ -89,7 +92,8 @@ int main(int argc, char* argv[])
     printf("Setup world entities\n");
     setupWorld(currentWorld);
 
-    currentWorld->globalConfig = new Config(argc, argv);
+    currentWorld->globalConfig = new Config();
+    setConfig(argc,argv,currentWorld->globalConfig);
 
     Film film(360, 240, 3.6e-2f);
     pinhole c(vector3D(0,0,1),normalize(vector3D(8.f,-4.f,-2.5f)),point3D(-8.f,4.f,2.5f),&film,3.5e-2f);

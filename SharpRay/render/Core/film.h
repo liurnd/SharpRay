@@ -1,7 +1,7 @@
 #ifndef _FILM_H_
 #define _FILM_H_
 #include <Core/BaseDS.h>
-#include <Core/Color.h>
+#include <Core/color.h>
 struct pixelCoord2
 {
     CoordFloat x, y;

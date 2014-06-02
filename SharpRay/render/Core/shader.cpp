@@ -1,6 +1,6 @@
 #include <Core/film.h>
 #include <Entity/entity.h>
-#include <Core/Color.h>
+#include <Core/color.h>
 #include <Core/shader.h>
 #include <Core/ray.h>
 #include <Core/world.h>
