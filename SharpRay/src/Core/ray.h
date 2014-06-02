@@ -3,6 +3,7 @@
 
 #include <Core/BaseDS.h>
 #include <Core/Color.h>
+#define OODSize 20
 class Film;
 struct Pixel;
 class Entity;
@@ -15,7 +16,7 @@ struct ShadeInfo
 	float firstHitT;
     point3D hitPoint;
 	normal3D hitNormal;
-	Entity* firstHitEntity;
+    Entity* firstHitEntity;
 	RColor Lo;
 };
 
