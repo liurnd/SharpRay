@@ -14,9 +14,9 @@ class MeshTriangle : public Entity
 public:
     Triangle* triangle;
 
-    bool firstHit(const Ray* ray, CoordFloat& t);
-    normal3D normalAt(const point3D& pos);
-    bool map2texture(const point3D& point, point3D& texturePoint){return false;}
+    bool firstHit(const Ray* r, CoordFloat& t, uint8_t deferData[]=0);
+    normal3D normalAt(const point3D& pos, const uint8_t deferData[]=0);
+    bool map2texture(const point3D& point, point3D& texturePoint, const uint8_t deferData[]=0){return false;}
 };
 
 #endif // MESHTRIANGLE_H

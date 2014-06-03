@@ -6,12 +6,12 @@ Sphere::~Sphere()
 {
 }
 
-normal3D Sphere::normalAt(const point3D& pos)
+normal3D Sphere::normalAt(const point3D& pos, const uint8_t deferData[])
 {
     return normalize(pos - position);
 }
 
-bool Sphere::firstHit(const Ray* r, CoordFloat& t)
+bool Sphere::firstHit(const Ray* r, CoordFloat& t, uint8_t deferData[])
 {
     point3D nPos = position - r->origin;
     float b = -2*dot(r->direction, nPos);
@@ -29,7 +29,7 @@ bool Sphere::firstHit(const Ray* r, CoordFloat& t)
     return false;
 }
 
-bool Sphere::map2texture(const point3D &point, point3D &texturePoint)
+bool Sphere::map2texture(const point3D &point, point3D &texturePoint, const uint8_t deferData[])
 {
     normal3D centre2point = (point - position) / radius;
     if (centre2point.z > 0.9999999f||centre2point.z < -0.999999f)

@@ -3,7 +3,8 @@
 
 #include <Core/BaseDS.h>
 #include <Core/color.h>
-#define OODSize 20
+#include <cstdint>
+#define DDSize 20
 class Film;
 struct Pixel;
 class Entity;
@@ -14,6 +15,7 @@ struct ShadeInfo
 {
 	float transferFactor;
 	float firstHitT;
+    uint8_t deferData[DDSize];
     point3D hitPoint;
 	normal3D hitNormal;
     Entity* firstHitEntity;

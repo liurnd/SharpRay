@@ -18,7 +18,7 @@ void Material::shade(Ray* r)
     Config* config = currentWorld->globalConfig;
 
     si.hitPoint = r->origin + r->direction*si.firstHitT;
-    si.hitNormal = si.firstHitEntity->normalAt(si.hitPoint);
+    si.hitNormal = si.firstHitEntity->normalAt(si.hitPoint,si.deferData);
 
 	si.Lo = RColor(0);
     if (dot(si.hitNormal,r->direction) > 0)
@@ -92,7 +92,7 @@ void Material::shade(Ray* r)
     if (texture!=NULL)
     {
         point3D texturePoint;
-        if (r->shadeInfo.firstHitEntity->map2texture(r->shadeInfo.hitPoint,texturePoint))
+        if (r->shadeInfo.firstHitEntity->map2texture(r->shadeInfo.hitPoint,texturePoint,si.deferData))
             tColor = (*texture)(texturePoint);
     }
 
