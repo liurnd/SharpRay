@@ -17,6 +17,8 @@
 
 # Build results
 
+runtime/
+model/
 [Dd]ebug/
 [Rr]elease/
 x64/
