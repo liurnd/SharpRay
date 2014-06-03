@@ -3,15 +3,16 @@
 #include <Core/fmath.h>
 #include <Entity/entity.h>
 struct Mesh;
+struct Triangle;
 class MeshTriangle : public Entity
 {
+
     struct triangleParam{
         CoordFloat beta,gamma;
     };
 
 public:
-    Mesh* mesh;
-    int vertexIdx[3];
+    Triangle* triangle;
 
     bool firstHit(const Ray* ray, CoordFloat& t);
     normal3D normalAt(const point3D& pos);

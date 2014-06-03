@@ -30,7 +30,7 @@ void setConfig(int argc, char* argv[], Config* config)
     config->numAntialiasSample = 4;
     config->numAreaLightSample = 24;
     config->numPathTraceSample = 2;
-    config->traceLevelLimit = 3;
+    config->traceLevelLimit = 0;
     while((c = getopt_long(argc, argv,optString,longOpts,&longIndex))!=-1)
     {
         switch (c){

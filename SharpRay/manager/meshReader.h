@@ -2,5 +2,6 @@
 #define MESHREADER_H
 #include <Util/mesh.h>
 #include <cstdio>
-bool readMesh(FILE* fin, Mesh*);
+bool readObjFile(const char* fName, Mesh* mesh);
+
 #endif // MESHREADER_H

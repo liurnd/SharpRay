@@ -17,4 +17,4 @@ endif()
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/manager ${CMAKE_SOURCE_DIR}/render ${CMAKE_SOURCE_DIR}/third-party)
 
 add_executable(sharpRay "test/main.cpp" ${RENDER_CPP} ${MGR_CPP})
-add_executable(unittest_triangle "test/unittest_triangle.cpp" ${RENDER_CPP} ${MGR_CPP})
+add_executable(unittest_triangle "test/unittest_obj.cpp" ${RENDER_CPP} ${MGR_CPP})

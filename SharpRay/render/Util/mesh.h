@@ -2,18 +2,22 @@
 #define MESH_H
 #include <Core/BaseDS.h>
 #include <Core/fmath.h>
+
+class Material;
+class World;
+struct Triangle{
+    point3D vertex[3];
+    point3D texturePos[3];
+    normal3D normal[3];
+};
+
 struct Mesh
 {
 public:
-    point3D* vertices;
-    normal3D* normals;
-    float* texture_u;
-    float* texture_v;
+    Material* material;
+    Triangle* triMesh;
 
-    int* face[3];
-
-    int numVertices;
-    int numFace;
+    int numTriangle;
+    void addToWorld(World* world);
 };
-
 #endif // MESH_H

@@ -1,0 +1,1 @@
+#include "stdcompact.h"

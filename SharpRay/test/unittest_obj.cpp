@@ -12,13 +12,25 @@
 #include <ctime>
 #include <Util/mesh.h>
 #include <configmgr.h>
+#include <meshReader.h>
 #include <texturereader.h>
 
-vector3D vecList[] = {point3D(0,1,0),point3D(1,0,1), point3D(-1,0,1), point3D(0,-1,0)};
 void setupMesh(World* currentWorld)
 {
     spotLight* p = new spotLight();
-    p->position = point3D(0.f,5.f,5.f);
+    p->position = point3D(11.f,0.6f,6.f);
+    p->ls = 0.2f;
+    p->color = RColor(1.f,1.f,1.f);
+    currentWorld->lightList.push_back(p);
+
+    p = new spotLight();
+    p->position = point3D(-11.f,0.6f,-2.f);
+    p->ls = 0.2f;
+    p->color = RColor(1.f,1.f,1.f);
+    currentWorld->lightList.push_back(p);
+
+    p = new spotLight();
+    p->position = point3D(2.f,5.f,15.f);
     p->ls = 0.2f;
     p->color = RColor(1.f,1.f,1.f);
     currentWorld->lightList.push_back(p);
@@ -32,24 +44,10 @@ void setupMesh(World* currentWorld)
     matt1->ka = 0.6f;
 
     Mesh* mesh = new Mesh();
-    mesh->vertices = vecList;
-    mesh->numVertices = 4;
+    mesh->material = matt1;
 
-    MeshTriangle* tr = new MeshTriangle();
-    tr->mesh = mesh;
-    tr->vertexIdx[0] = 0;
-    tr->vertexIdx[1] = 2;
-    tr->vertexIdx[2] = 1;
-    tr->material = matt1;
-    currentWorld->entityList.push_back(tr);
-
-    tr = new MeshTriangle();
-    tr->mesh = mesh;
-    tr->vertexIdx[0] = 1;
-    tr->vertexIdx[1] = 2;
-    tr->vertexIdx[2] = 3;
-    tr->material = matt1;
-    currentWorld->entityList.push_back(tr);
+    readObjFile("odd.obj",mesh);
+    mesh->addToWorld(currentWorld);
 }
 
 
@@ -66,7 +64,7 @@ int main(int argc, char* argv[])
     printf("Setup world entities\n");
     setupMesh(currentWorld);
 
-    pinhole c(vector3D(0,0,1),normalize(vector3D(8.f,-4.f,-2.5f)),point3D(-8.f,4.f,2.5f),&film,3.5e-2f);
+    pinhole c(vector3D(0,1,0),normalize(vector3D(1.f,-22.f,-27.f)),point3D(-1.f,22.f,27.f),&film,3.5e-2f);
 
     c.shoot(currentWorld);
     film.dumpToHDRFile("a.hdr");

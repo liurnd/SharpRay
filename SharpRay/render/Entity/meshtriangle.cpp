@@ -4,9 +4,9 @@
 
 normal3D MeshTriangle::normalAt(const point3D& pos)
 {
-    point3D& v0 = mesh->vertices[vertexIdx[0]];
-    point3D& v1 = mesh->vertices[vertexIdx[1]];
-    point3D& v2 = mesh->vertices[vertexIdx[2]];
+    point3D& v0 = triangle->vertex[0];
+    point3D& v1 =  triangle->vertex[1];
+    point3D& v2 =  triangle->vertex[2];
 
 
     return normalize(cross(v0-v1, v0-v2));
@@ -14,9 +14,9 @@ normal3D MeshTriangle::normalAt(const point3D& pos)
 
 bool MeshTriangle::firstHit(const Ray* ray, CoordFloat& t)
 {
-    point3D& v0 = mesh->vertices[vertexIdx[0]];
-    point3D& v1 = mesh->vertices[vertexIdx[1]];
-    point3D& v2 = mesh->vertices[vertexIdx[2]];
+    point3D& v0 = triangle->vertex[0];
+    point3D& v1 =  triangle->vertex[1];
+    point3D& v2 =  triangle->vertex[2];
 
     CoordFloat a = v0.x-v1.x, b = v0.x-v2.x, c = ray->direction.x, d = v0.x-ray->origin.x;
     CoordFloat e = v0.y-v1.y, f = v0.y-v2.y, g = ray->direction.y, h = v0.y-ray->origin.y;
