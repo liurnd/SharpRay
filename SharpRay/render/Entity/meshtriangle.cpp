@@ -8,7 +8,6 @@ normal3D MeshTriangle::normalAt(const point3D& pos, const uint8_t deferData[])
     point3D& v1 =  triangle->vertex[1];
     point3D& v2 =  triangle->vertex[2];
 
-
     return normalize(cross(v0-v1, v0-v2));
 }
 
@@ -42,5 +41,10 @@ bool MeshTriangle::firstHit(const Ray* ray, CoordFloat& t, uint8_t deferData[])
 
     ek = a*p-b*r+d*s;
     t = ek*invD;
+    if (deferData!=nullptr){
+        triangleParam* param =(triangleParam*) deferData;
+        param->beta = beta;
+        param->gamma = gamma;
+    }
     return true;
 }

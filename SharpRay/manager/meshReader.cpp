@@ -51,7 +51,7 @@ bool readObjFile(const char* fName, Mesh* mesh){
         }else if (type_str[0] == '#')
             continue;
         else{
-            fprintf(stderr, "Unknown token %s\n", type_str);
+            fprintf(stderr, "Unknown token %s\n", type_str.c_str());
             continue;
         }
     }
