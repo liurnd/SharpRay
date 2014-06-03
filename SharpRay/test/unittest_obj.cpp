@@ -63,8 +63,9 @@ int main(int argc, char* argv[])
 
     printf("Setup world entities\n");
     setupMesh(currentWorld);
-
-    pinhole c(vector3D(0,1,0),normalize(vector3D(1.f,-22.f,-27.f)),point3D(-1.f,22.f,27.f),&film,3.5e-2f);
+    point3D viewPoint(-93,90,-227);
+    point3D targetPoint(10.f,32.f,38.f);
+    pinhole c(vector3D(0,1,0),normalize(targetPoint - viewPoint),viewPoint,&film,3.5e-2f);
 
     c.shoot(currentWorld);
     film.dumpToHDRFile("a.hdr");
