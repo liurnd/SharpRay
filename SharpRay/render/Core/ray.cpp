@@ -21,12 +21,15 @@ bool Ray::trace()
     for (auto i = currentWorld->entityList.begin(); i != currentWorld->entityList.end(); i++)
     {
         CoordFloat t;
-        if (!(*i)->firstHit(this,t))
+        uint8_t deferData[DDSize];
+        if (!(*i)->firstHit(this,t,deferData))
             continue;
         if (shadeInfo.firstHitEntity==NULL || t < shadeInfo.firstHitT)
 		{
 			if (t < (*i)->kEpsilon)
 				continue;
+            //Overwrite defer data for farther use.
+            memcpy(shadeInfo.deferData,deferData,DDSize);
 			shadeInfo.firstHitT = t;
             shadeInfo.firstHitEntity = *i;
 		}

@@ -2,7 +2,7 @@
 #include <Util/mesh.h>
 #include <Core/ray.h>
 
-normal3D MeshTriangle::normalAt(const point3D& pos)
+normal3D MeshTriangle::normalAt(const point3D& pos, const uint8_t deferData[])
 {
     point3D& v0 = triangle->vertex[0];
     point3D& v1 =  triangle->vertex[1];
@@ -12,7 +12,7 @@ normal3D MeshTriangle::normalAt(const point3D& pos)
     return normalize(cross(v0-v1, v0-v2));
 }
 
-bool MeshTriangle::firstHit(const Ray* ray, CoordFloat& t)
+bool MeshTriangle::firstHit(const Ray* ray, CoordFloat& t, uint8_t deferData[])
 {
     point3D& v0 = triangle->vertex[0];
     point3D& v1 =  triangle->vertex[1];
