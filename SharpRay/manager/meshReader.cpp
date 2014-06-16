@@ -70,6 +70,7 @@ bool readObjFile(const char* fName, Mesh* mesh){
             normals.push_back(nor);
         }else if(type_str == "f"){
             _ObjMeshFaceIndex face_index;
+            readFace(str_stream,face_index);
             faces.push_back(face_index);
         }else if (type_str[0] == '#')
             continue;
@@ -82,13 +83,14 @@ bool readObjFile(const char* fName, Mesh* mesh){
     mesh->triMesh = new Triangle[faces.size()];
     mesh->numTriangle = faces.size();
 
-    for(size_t i = 0; i < faces.size(); ++i){
+    for(size_t i = 0; i < mesh->numTriangle; ++i){
         Triangle& face = mesh->triMesh[i];
         for(size_t j = 0; j < 3; ++j){
-            face.vertex[j] = positions[faces[i].pos_index[j] - 1];
-            if (faces[i].tex_index[j]>0)
-                face.texturePos[j]  = texcoords[faces[i].tex_index[j] - 1];
-            face.normal[j]    = normals[faces[i].nor_index[j] - 1];
+            _ObjMeshFaceIndex& oFace = faces[i];
+            face.vertex[j] = positions[oFace.pos_index[j] - 1];
+            if (oFace.tex_index[j]>0)
+                face.texturePos[j]  = texcoords[oFace.tex_index[j] - 1];
+            face.normal[j]    = normals[oFace.nor_index[j] - 1];
         }
     }
     return true;
