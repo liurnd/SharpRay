@@ -24,6 +24,7 @@ void readFace(std::stringstream& ss, _ObjMeshFaceIndex& face)
     for(int i = 0; i < 3; ++i){
         face.nor_index[i] = 0;
         face.tex_index[i] = 0;
+        face.pos_index[i] = 0;
         ss >> face.pos_index[i];
         if (ss.peek() == '/') // v//vn or v/vt/vn v/vt
         {
@@ -37,7 +38,10 @@ void readFace(std::stringstream& ss, _ObjMeshFaceIndex& face)
             {
                 ss >> face.tex_index[i];
                 if (ss.peek() == '/') //v/vt/vn
+                {
+                    ss >> interupt;
                     ss >> face.nor_index[i];
+                }
             }
         }
     }
