@@ -18,6 +18,31 @@ struct _ObjMeshFaceIndex{
 
 std::vector<_ObjMeshFaceIndex>  faces;
 
+void readFace(std::stringstream& ss, _ObjMeshFaceIndex& face)
+{
+    char interupt;
+    for(int i = 0; i < 3; ++i){
+        face.nor_index[i] = 0;
+        face.tex_index[i] = 0;
+        ss >> face.pos_index[i];
+        if (ss.peek() == '/') // v//vn or v/vt/vn v/vt
+        {
+            ss >> interupt;
+            if (ss.peek() == '/') // v//vn
+            {
+                ss >> interupt;
+                ss >> face.nor_index[i];
+            }
+            else    //v/vt/vn or v/vt
+            {
+                ss >> face.tex_index[i];
+                if (ss.peek() == '/') //v/vt/vn
+                    ss >> face.nor_index[i];
+            }
+        }
+    }
+}
+
 bool readObjFile(const char* fName, Mesh* mesh){
     std::ifstream filestream;
     filestream.open(fName);
@@ -41,12 +66,6 @@ bool readObjFile(const char* fName, Mesh* mesh){
             normals.push_back(nor);
         }else if(type_str == "f"){
             _ObjMeshFaceIndex face_index;
-            char interupt;
-            for(int i = 0; i < 3; ++i){
-                str_stream >> face_index.pos_index[i] >> interupt
-                        >> face_index.tex_index[i]  >> interupt
-                        >> face_index.nor_index[i];
-            }
             faces.push_back(face_index);
         }else if (type_str[0] == '#')
             continue;
@@ -63,7 +82,8 @@ bool readObjFile(const char* fName, Mesh* mesh){
         Triangle& face = mesh->triMesh[i];
         for(size_t j = 0; j < 3; ++j){
             face.vertex[j] = positions[faces[i].pos_index[j] - 1];
-            face.texturePos[j]  = texcoords[faces[i].tex_index[j] - 1];
+            if (faces[i].tex_index[j]>0)
+                face.texturePos[j]  = texcoords[faces[i].tex_index[j] - 1];
             face.normal[j]    = normals[faces[i].nor_index[j] - 1];
         }
     }
