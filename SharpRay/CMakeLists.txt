@@ -5,7 +5,7 @@ FILE(GLOB_RECURSE RENDER_CPP "render/*.cpp")
 FILE(GLOB_RECURSE MGR_CPP "manager/*.cpp")
 
 macro (newTest testName)
-	add_executable(${testName} "test/unittest_${testName}.cpp" ${RENDER_CPP} ${MGR_CPP})
+        add_executable("unittest_${testName}" "test/unittest_${testName}.cpp" ${RENDER_CPP} ${MGR_CPP})
 	add_test(${testName} ${testName})
 endmacro(newTest testName)
 
@@ -25,3 +25,4 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/manager ${CMAKE_SOURCE_DIR}/render ${CMA
 add_executable(sharpRay "test/main.cpp" ${RENDER_CPP} ${MGR_CPP})
 
 newTest(obj)
+newTest(faceReader)
