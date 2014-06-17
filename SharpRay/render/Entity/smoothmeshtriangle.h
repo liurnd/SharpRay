@@ -3,10 +3,10 @@
 #include <Core/BaseDS.h>
 #include <Entity\meshtriangle.h>
 
-class smoothMeshTriangle : public MeshTriangle
+class SmoothMeshTriangle : public MeshTriangle
 {
 public:
-    smoothMeshTriangle();
+    SmoothMeshTriangle();
     normal3D normalAt(const point3D& pos, const uint8_t deferData[]=nullptr) override;
 };
 
