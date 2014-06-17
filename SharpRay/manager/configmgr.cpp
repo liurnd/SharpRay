@@ -1,5 +1,5 @@
 #include "configmgr.h"
-#include "getopt.h"
+#include <getopt/getopt.h>
 #include <cstdio>
 static const struct option longOpts[]=
 {

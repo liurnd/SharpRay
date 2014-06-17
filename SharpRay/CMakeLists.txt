@@ -1,11 +1,12 @@
 PROJECT(SharpRay)
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 
-FILE(GLOB_RECURSE RENDER_CPP "render/*.cpp")
-FILE(GLOB_RECURSE MGR_CPP "manager/*.cpp")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" )
+SUBDIRS(render manager third-party/getopt)
 
 macro (newTest testName)
-        add_executable("unittest_${testName}" "test/unittest_${testName}.cpp" ${RENDER_CPP} ${MGR_CPP})
+    add_executable("unittest_${testName}" "test/unittest_${testName}.cpp" ${MGR_CPP})
+	TARGET_LINK_LIBRARIES("unittest_${testName}" libsharpray libsharpray_mgr)
 	add_test(${testName} ${testName})
 endmacro(newTest testName)
 
@@ -21,8 +22,6 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 endif()
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/manager ${CMAKE_SOURCE_DIR}/render ${CMAKE_SOURCE_DIR}/third-party)
-
-add_executable(sharpRay "test/main.cpp" ${RENDER_CPP} ${MGR_CPP})
 
 newTest(obj)
 newTest(faceReader)
