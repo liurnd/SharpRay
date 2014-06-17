@@ -1,11 +1,13 @@
 #ifndef SMOOTHMESHTRIANGLE_H
 #define SMOOTHMESHTRIANGLE_H
 #include <Core/BaseDS.h>
-class smoothMeshTriangle : public meshTriangle
+#include <Entity\meshtriangle.h>
+
+class smoothMeshTriangle : public MeshTriangle
 {
 public:
     smoothMeshTriangle();
-    normal3D normalAt(const point3D& pos, const uint8_t deferData[]=0);
+    normal3D normalAt(const point3D& pos, const uint8_t deferData[]=nullptr) override;
 };
 
 #endif // SMOOTHMESHTRIANGLE_H

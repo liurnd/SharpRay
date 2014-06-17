@@ -6,7 +6,7 @@ struct Mesh;
 struct Triangle;
 class MeshTriangle : public Entity
 {
-
+protected:
     struct triangleParam{
         CoordFloat beta,gamma;
     };

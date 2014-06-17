@@ -42,7 +42,7 @@ bool MeshTriangle::firstHit(const Ray* ray, CoordFloat& t, uint8_t deferData[])
     ek = a*p-b*r+d*s;
     t = ek*invD;
     if (deferData!=nullptr){
-        triangleParam* param =(triangleParam*) deferData;
+        triangleParam* param =reinterpret_cast<triangleParam*>(deferData);
         param->beta = beta;
         param->gamma = gamma;
     }

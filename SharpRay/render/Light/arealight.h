@@ -5,9 +5,10 @@
 class AreaLight
 {
 public:
+	virtual ~AreaLight() {}
 
 
-    /**
+	/**
      * @brief CalcSample
      * @param squareSample [in] a sample in square, 0 < x,y < 1
      * @param samplePoint  [out] samplePoint on the surface of the area light
