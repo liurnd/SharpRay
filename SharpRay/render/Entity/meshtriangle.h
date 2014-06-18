@@ -6,9 +6,11 @@ struct Mesh;
 struct Triangle;
 class MeshTriangle : public Entity
 {
-
+protected:
     struct triangleParam{
-        CoordFloat beta,gamma;
+		// p = (1-beta-gamma)* v0 + beta*v1 + gamma*v2
+	    CoordFloat beta;	
+	    CoordFloat gamma;
     };
 
 public:
