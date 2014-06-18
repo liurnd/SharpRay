@@ -1,7 +1,7 @@
-#include "camera.h"
+#include "pinhole.h"
 #include <Core/ray.h>
 
-void pinhole::shoot(World *world)
+void pinhole::generateRays(World* world, RayList& rayList)
 {
     Sampler* sampler = new NRook(10240);
     sampler->shuffle();
@@ -11,20 +11,14 @@ void pinhole::shoot(World *world)
         Pixel* nPixel = &(lFilm->pixelList[i]);
         for (int j = 0; j < numAASample;j++)
         {
-            point3D pixelPos = mapFilm2World(nPixel->coord.x+((*sampler)[j].x-0.5f)*lFilm->pixelSize, nPixel->coord.y+((*sampler)[j].y-0.5f)*lFilm->pixelSize);
+			CoordFloat dx = numAASample == 1 ? 0 : ((*sampler)[j].x - 0.5f)*lFilm->pixelSize;
+			CoordFloat dy = numAASample == 1 ? 0 : ((*sampler)[j].y - 0.5f)*lFilm->pixelSize;
+            point3D pixelPos = mapFilm2World(nPixel->coord.x+dx, nPixel->coord.y+dy);
             Ray *ray = new Ray(pixelPos, normalize(pinholePos-pixelPos), lFilm, nPixel);
             ray->currentWorld = world;
-            shader->rayQueue.addRay(ray);
+			rayList.addRay(ray);
         }
     }
-
     printf("Done generating ray samples\n");
-
-    shader->exposure(4);
-
-    for (int i = 0;i < lFilm->pixelCnt;i++)
-    {
-        Pixel* nPixel = &(lFilm->pixelList[i]);
-        nPixel->color /= numAASample;
-    }
+	delete sampler;
 }

@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <omp.h>
 
-void Shader::exposure(int numThread)
+void Shader::exposure(RayList& rayQueue, int numThread)
 {
     Ray** rayArray = rayQueue.getRayArray();
     int n = rayQueue.rayList.size();
@@ -30,6 +30,10 @@ void Shader::exposure(int numThread)
         }
         delete ray;
     }
+	
+	for (int i = 0; i < numThread; i++)
+		delete samplerList[i];
+	delete[] samplerList;
 }
 
 
