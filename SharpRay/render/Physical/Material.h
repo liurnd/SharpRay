@@ -10,11 +10,18 @@ class Sampler;
 class Texture;
 class Material
 {
+	RColor calcDirectLight(Ray*);
+	RColor calcAreaLight(Ray*);
+	RColor calcGlobalIllu(Ray*);
+	RColor calcTransparent(Ray*);
 public:
+	virtual ~Material() {}
+
 	float ka, kd;
     RColor color;
     BSDF* bsdf;
     Texture* texture;
+
 
 
     Material();
