@@ -61,15 +61,22 @@ int main(int argc, char* argv[])
     currentWorld->globalConfig = new Config();
     setConfig(argc,argv,currentWorld->globalConfig);
 
-    printf("Setup world entities\n");
     setupMesh(currentWorld);
+	printf("Mesh loaded\n");
+
     point3D viewPoint(30.436,27.220,29.432);
     point3D targetPoint(0,0,0);
     pinhole c(vector3D(0,1,0),normalize(targetPoint - viewPoint),viewPoint,&film,3.5e-2f);
 	Shader shader;
 	RayList rayList;
+
 	c.generateRays(currentWorld, rayList);
+	printf("Done generating rays\n");
+
+	printf("Start ray tracing\n");
 	shader.exposure(rayList);
+
+	printf("Dumping film\n");
 	c.exposureFilm();
 
     film.dumpToHDRFile("a.hdr");

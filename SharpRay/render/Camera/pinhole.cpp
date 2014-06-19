@@ -19,6 +19,5 @@ void pinhole::generateRays(World* world, RayList& rayList)
 			rayList.addRay(ray);
         }
     }
-    printf("Done generating ray samples\n");
 	delete sampler;
 }
