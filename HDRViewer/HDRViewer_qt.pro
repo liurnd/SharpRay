@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    rgbhistogram.cpp
+    rgbhistogram.cpp \
+    imageviewer.cpp
 
 HEADERS  += mainwindow.h \
-    rgbhistogram.h
+    rgbhistogram.h \
+    imageviewer.h
 
 FORMS    += mainwindow.ui

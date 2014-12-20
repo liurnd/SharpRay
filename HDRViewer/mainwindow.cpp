@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->ISOValue->setText(QString("%1").arg(ISO));
     ui->gammaFactor->setText(QString("%1").arg(gamma));
 
-    displayGround = new QLabel();
+    displayGround = new ImageViewer();
     displayGround->show();
 
     hist = new RGBHistogram(NULL, ui->histWidget);
@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionOpen,SIGNAL(triggered()),this,SLOT(doOpenFile()));
     connect(ui->ISOValueSlider, SIGNAL(valueChanged(int)),this,SLOT(changeParam()));
     connect(ui->gammaFactorSlider,SIGNAL(valueChanged(int)),this,SLOT(changeParam()));
+    connect(displayGround,SIGNAL(clicked(QPoint)),this,SLOT(clickOnPic(QPoint)));
 }
 
 MainWindow::~MainWindow()
@@ -70,7 +71,7 @@ void MainWindow::doOpenFile()
     pixelCnt = 0;
     while(1)
     {
-        int cnt = fread(pixelList,sizeof(HDRPixel), imgWidth*imgHeight, fin);
+        size_t cnt = fread(pixelList,sizeof(HDRPixel), imgWidth*imgHeight, fin);
         if (cnt <= 0)
             break;
         pixelCnt+=cnt;
@@ -96,4 +97,13 @@ void MainWindow::updateImage()
     displayGround->setPixmap(QPixmap::fromImage(*image));
     displayGround->resize(imgWidth,imgHeight);
     displayGround->show();
+}
+
+void MainWindow::clickOnPic(QPoint pos)
+{
+    QRgb pixel = image->pixel(pos);
+    ui->infoBox->setText(QString("X:%1\nY:%2\nR:%3 B:%4 G:%5")
+                         .arg(pos.x()).arg(pos.y())
+                         .arg(qRed(pixel)).arg(qBlue(pixel)).arg(qGreen(pixel)));
+
 }

@@ -6,6 +6,7 @@
 #include <math.h>
 #include <QLabel>
 #include "rgbhistogram.h"
+#include "imageviewer.h"
 
 struct HDRPixel{
     int x, y;
@@ -39,10 +40,10 @@ public:
 private:
     Ui::MainWindow *ui;
     int imgWidth; int imgHeight;
-    int pixelCnt;
+    size_t pixelCnt;
     HDRPixel* pixelList;
     QImage* image;
-    QLabel* displayGround;
+    ImageViewer* displayGround;
     RGBHistogram* hist;
 
     float isoLogBase, maxISO, isoFactor;  //ISO = isoFactor * isoLogBase ^ level
@@ -56,6 +57,7 @@ public slots:
     void doOpenFile();
     void updateImage();
     void changeParam();
+    void clickOnPic(QPoint);
 };
 
 

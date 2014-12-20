@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>329</width>
-    <height>390</height>
+    <height>482</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -121,9 +121,19 @@
     <property name="geometry">
      <rect>
       <x>10</x>
+      <y>210</y>
+      <width>311</width>
+      <height>241</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="infoBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
       <y>130</y>
       <width>311</width>
-      <height>231</height>
+      <height>71</height>
      </rect>
     </property>
    </widget>
